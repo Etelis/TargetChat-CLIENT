@@ -117,12 +117,14 @@ input {
 }
 
 .toSignIn__link {
+  cursor: pointer;
   margin: 3px;
   font-size: 17px;
-  color: rgb(142, 142, 228);
+  color: rgb(147, 228, 255);
   font-weight: 500;
   text-decoration: none;
 }
+
 
 .error {
   position: absolute;

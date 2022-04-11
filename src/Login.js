@@ -11,7 +11,12 @@ import { ConstructionOutlined } from '@mui/icons-material';
 
 
 function Login() {
-    const [state, dispatch] = useStateValue();
+	  const [state, dispatch] = useStateValue();
+    const toSignUp = () => {
+      dispatch({
+            type: actionTypes.SET_USER,
+            user: "toRegister"});
+    };
     const [input, setInput] = useState
     ({
         userName: '',
@@ -126,7 +131,7 @@ function Login() {
                     <Button variant="contained" className='button' color='primary' onClick={sendLogin} type="submit">
                         Login
                     </Button>
-                    <h4>Need an account?    <span className="boldLink" href=""> Register </span></h4>
+                    <h4>Need an account?    <a className="boldLink" onClick={toSignUp}> Register </a></h4>
                 </div>
             </div>
             <div className='login__QR'>

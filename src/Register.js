@@ -2,24 +2,36 @@ import React from 'react';
 import "./Register.css";
 import { Button, IconButton } from "@material-ui/core";
 import {useState, useEffect} from "react";
+import { useStateValue } from './StateProvider';
+import { actionTypes , dispatch} from './reducer';
 
 function Register() {
-    const initialValues = {userName: "", password: "", verify_password: "", displayname: "", photo: ""};
-    const [formValues, setFormValues] = useState(initialValues);
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
-    const handleChange = (e) => {
+  const toSignIn = () => {
+      dispatch({
+            type: actionTypes.SET_USER,
+            user: ""});
+  };
+  
+  const [state, dispatch] = useStateValue();
+  const initialValues = {userName: "", password: "", verify_password: "", displayname: "", photo: ""};
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  
+  const handleChange = (e) => {
         const{name, value} = e.target;
         setFormValues({...formValues, [name]: value});
     }
+  
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
     }
+  
     const validate = (values) => {
         const errors = {};
-        const regex = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}/;
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if(!values.userName) {
             errors.userName = "Username is required!"
         }
@@ -41,12 +53,16 @@ function Register() {
         } 
         return errors;
     }
+  
     useEffect(() => {
         console.log(formErrors);
         if(Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
+            dispatch({
+            type: actionTypes.SET_USER,
+            user: formValues.userName});
         }
     }, [formErrors]);
+  
   return (
     <div className='register'>
         <div className='register__container'>
@@ -95,7 +111,7 @@ function Register() {
                     <div className='toSignIn'>
                         Already have an account?
                     </div>
-                    <div className='toSignIn__link'>
+                    <div className='toSignIn__link' onClick={toSignIn}>
                         Sign in
                     </div>
                 </div>

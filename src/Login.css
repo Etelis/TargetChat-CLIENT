@@ -154,6 +154,7 @@ input {
 
 .login__formFooter > h4 > .boldLink{
   color: rgb(147, 228, 255);
+	cursor: pointer;
 }
 
 .login__formFooter > .button {
