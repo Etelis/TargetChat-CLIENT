@@ -1,5 +1,4 @@
 import React, {useState,useEffect} from 'react';
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import "./Sidebar.css";
 import { Avatar, IconButton } from "@material-ui/core";
 import ChatIcon from '@material-ui/icons/Chat';
@@ -8,38 +7,82 @@ import SearchIcon from '@material-ui/icons/Search';
 import PersonAddTwoToneIcon from '@material-ui/icons/PersonAddTwoTone';
 import SidebarChat from "./SidebarChat";
 import { useStateValue } from './StateProvider';
-
+import { actionTypes } from './reducer';
 
 function Sidebar() {
-	const exampleRoom = {
-		id: 0,
-		name: ""
-	}
-	
-  const [rooms, setRooms] = useState([exampleRoom]);
-  const [{ user }, dispatch] = useStateValue();
 
+  const [newContact, setNewContact] = useState("");
+  const [rooms, setRooms] = useState([]);
+  const [state, dispatch] = useStateValue();
+  const [add, setAdd] = useState(true);
+  
   const addPerson = () => {
     const chatName = prompt("Enter desired user");
     if(chatName) {
-      // ADD NEW CHAT LOGIC
+      dispatch
+    ({
+      type: actionTypes.ADD_CHATS,
+      chats: [{id: 5, name: chatName, message: []}]
+    });
     }
   }
-
-
-  useEffect(() => { //setRooms() // SET ROOMS 
-									},[]);
+	const initalizeChats = () => {
+    const sampleRooms = 
+    [
+      {
+        id: 1,
+        name: "Orel",
+        messages: []
+      },
+      {
+        id: 2,
+        name: "Itay",
+        messages: []
+      },
+      {
+        id: 3,
+        name: "Amit",
+        messages: []
+      },
+      {
+        id: 4,
+        name: "Maayan",
+        messages: []
+      },
+      {
+        id: 5,
+        name: "Yuval",
+        messages: []
+      },
+    ];
+    dispatch
+    ({
+      type: actionTypes.ADD_CHATS,
+      chats: sampleRooms
+    });
+  }
   
+ useEffect(() =>  {
+	  initalizeChats();
+  
+    setRooms(state.chats);
+  },[]);
+
+  useEffect(() => {
+    console.log("chats: ", state.chats);
+    setRooms(state.chats);
+  }, [state]);
+	
   return (
   <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src={user?.photoURL} />
+        <Avatar src={state.user?.photoURL} />
         <div className="sidebar__headerRight">
-          <div onClick={addPerson}>
-          <IconButton>
-            <PersonAddTwoToneIcon />
-          </IconButton>
-          </div>
+            <div onClick={addPerson}>      
+              <IconButton>
+                <PersonAddTwoToneIcon />
+              </IconButton>
+            </div>
           <IconButton>
             <ChatIcon />
           </IconButton>

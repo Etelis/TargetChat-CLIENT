@@ -35,7 +35,7 @@ function Chat() {
 		messageEndRef.current?.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
 	}, [messages]);
 
-	const sendMessage = async (e) => {
+	const sendMessage = (e) => {
 		e.preventDefault();
 		console.log("you typed >>>", input);
 
@@ -61,7 +61,6 @@ function Chat() {
 				<p className={`chat__message ${ message.name == user.displayName && `chat__messageReceived` }`}>
 					{message.message}
 					<span className="chat__name">{message.name}</span>
-					<span className="time__stamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
 				</p>
 				))}
 				<span ref={messageEndRef} />
@@ -89,7 +88,7 @@ function Chat() {
 					<div onMouseEnter={() => setEmojis(true)}
 						 onMouseLeave={() => setEmojis(false)}>
 				   <div className='chat__footerEmoji'>
-					{emojis === true && 
+					{emojis && 
 					<span className='emoji__selection'> 
 						<Picker onEmojiClick={(event, emojiObject) => { setInput(input + emojiObject.emoji);}} 
 						skinTone={SKIN_TONE_MEDIUM_DARK} /> 
