@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import "./Login.css";
 import { Button, IconButton } from "@material-ui/core";
 import { auth, provider } from './firebase';
@@ -7,11 +7,75 @@ import { useStateValue } from './StateProvider';
 import { actionTypes } from './reducer';
 import QR from "./qr.png";
 import GoogleIcon from '@mui/icons-material/Google';
+import { ConstructionOutlined } from '@mui/icons-material';
 
-import { useTransition, animate } from 'react-spring'
+
 function Login() {
     const [state, dispatch] = useStateValue();
+    const [input, setInput] = useState
+    ({
+        userName: '',
+        password: ''
+    });
+    const [requiredField, setRequiredField] = useState
+    ({
+        userNameField: true,
+        passwordField: true
+    });
+    
+    const [errorFields, setErrorFirlds] = useState(true);
 
+    const handleUserNameChange = (e) => {
+        let updatedVal = 
+        {
+            userName: e.target.value,
+            password: input.password,
+        };
+
+        setInput(input => 
+        ({
+            ...input,
+            ...updatedVal
+        }));
+        console.log("Email is: ", input.userName);
+        console.log("Password is: ", input.password);
+    };
+
+    const handlePassChange = (e) => {
+        let updatedVal = 
+        {
+            userName: input.userName,
+            password: e.target.value,
+        };
+
+        setInput(input => 
+        ({
+            ...input,
+            ...updatedVal
+        }));
+    };
+
+    const sendLogin = (e) => {
+        e.preventDefault();
+        let re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        let requiredFields = {
+            userNameField: true,
+            passwordField: true,
+        }
+
+        if (!input.userName){
+            requiredFields.userNameField = false
+        }
+
+        if ( !re.test(input.password) ){
+            requiredFields.passwordField = false
+        }
+
+        setRequiredField(requiredField => ({
+            ...requiredField,
+            ...requiredFields
+        }))
+    }
     const signInGoogle = () => {
         signInWithPopup(auth, provider)
         .then((result) => { dispatch({
@@ -20,8 +84,6 @@ function Login() {
         })} )
         .catch((error) => { alert(error.message)} );
     };
-
-   // const transition = useTransition(, {});
 
   return (
       
@@ -34,16 +96,34 @@ function Login() {
                 </div>
                 <div className='login__formBody'>
                     <div className='login__formBodyEmail'>
-                        <label htmlFor="ephone">USERNAME OR EMAIL ADDRESS</label>
-                        <input type="text" name="ephone" id="ephone"></input>
+                        {requiredField.userNameField ? (
+                            errorFields ? (
+                                <label htmlFor="ephone">USERNAME</label>
+                            ) : (
+                                <label htmlFor="ephone" className='attention'>USERNAME - login or password is invalid! </label>
+                            )
+                        ) : (
+                            <label htmlFor="ephone" className='attention'>USERNAME - this field is required! </label>
+                        )}
+                        <input type="text" name="ephone" id="ephone" value={input.userName}
+                               onChange={handleUserNameChange} />
                     </div>
                     <div className='login__formBodyPassword'>
-                        <label htmlFor="password">PASSWORD</label>
-                        <input type="password" name="password" id="password"></input>
+                        {requiredField.passwordField ? ( 
+                            errorFields ? (
+                                <label htmlFor="password">PASSWORD</label>
+                            ) : (
+                                <label htmlFor="password" className='attention'>PASSWORD - login or password is invalid! </label>
+                            )
+                            ) : (
+                                <label htmlFor="password" className='attention'>PASSWORD - password does not meet the password policy requirements</label>
+                            )}
+                        <input type="password" name="password" id="password" value={input.password}
+                               onChange={handlePassChange} />
                     </div>
                 </div>
                 <div className='login__formFooter'>
-                    <Button variant="contained" className='button' color='primary'>
+                    <Button variant="contained" className='button' color='primary' onClick={sendLogin} type="submit">
                         Login
                     </Button>
                     <h4>Need an account?    <span className="boldLink" href=""> Register </span></h4>

@@ -132,6 +132,10 @@ label {
     font-weight: 700;
   }
 
+.attention {
+  color: #f38688;
+}
+
 input {
     border-radius: 3px;
     width: 100%;
