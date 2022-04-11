@@ -4,14 +4,11 @@ import { Avatar, IconButton } from '@material-ui/core';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import { useParams } from "react-router-dom";
-import db from "./firebase";
-import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore';
 import { useStateValue } from './StateProvider';
 import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-
 
 
 function Chat() {
@@ -25,21 +22,13 @@ function Chat() {
 	const messageEndRef = useRef(null);
 
 	useEffect (() => {
+		// ROOM ID from app.js should be assinged here.
 		if (roomId) {
-			const docRef = doc(db, "rooms", roomId);
-
-			getDoc(docRef).then((snapshot) => {
-				setRoomName(snapshot.data().name); 
-			});
-
-			getDocs( query(collection(docRef, "messages"), orderBy ("timestamp")))
-			.then((snapshot) => {
-				setMessages(snapshot.docs.map((doc) => (doc.data()
-				)))
-			});
-			//console.log(docSnap.data());
-			//onSnapshot(collection(, ), (snapshot))
-		}
+			// set room name according to roomId
+			setRoomName();
+			// set all messages accoring to roomId
+			//setMessages();
+			}
 	}, [roomId,input]);
 
 	useEffect (() =>{
@@ -49,13 +38,9 @@ function Chat() {
 	const sendMessage = async (e) => {
 		e.preventDefault();
 		console.log("you typed >>>", input);
-		const docRef = doc(db, "rooms", roomId);
-	 	await addDoc(collection(docRef, "messages"), {
-			name: user.displayName,
-			message: input,
-			timestamp: serverTimestamp(),
-		}
-		);
+
+		// append new message to given chat.
+
 		setInput("");
 	};
 

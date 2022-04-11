@@ -16,6 +16,7 @@
 }
 
 .register__container{
+  
     display: flex;
     color: white;
     box-shadow: -1px 15px 10px -6px rgba(0, 0, 0, 0.75);
@@ -24,7 +25,7 @@
     padding-left: 20px;
     padding-right: 20px;
     min-width: 84px;
-    min-height: 400px;
+    min-height: 380px;
 }
 
 .boldDescription {
@@ -104,6 +105,8 @@ input {
 
 
 .toSignIn__container {
+  position: relative;
+  min-height: 5px;
   display: flex;
 }
 

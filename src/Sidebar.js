@@ -7,33 +7,28 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonAddTwoToneIcon from '@material-ui/icons/PersonAddTwoTone';
 import SidebarChat from "./SidebarChat";
-import db from "./firebase";
 import { useStateValue } from './StateProvider';
 
 
 function Sidebar() {
-  const [rooms, setRooms] = useState([]);
+	const exampleRoom = {
+		id: 0,
+		name: ""
+	}
+	
+  const [rooms, setRooms] = useState([exampleRoom]);
   const [{ user }, dispatch] = useStateValue();
 
   const addPerson = () => {
     const chatName = prompt("Enter desired user");
     if(chatName) {
-      const collectionRef = collection(db, "rooms");
-      const payload = { name: chatName, };
-      addDoc(collectionRef, payload);
+      // ADD NEW CHAT LOGIC
     }
   }
 
 
-  useEffect(() => { onSnapshot(collection(db, "rooms"), (snapshot) => {
-    setRooms(
-      snapshot.docs.map((doc) => ({
-        id: doc.id,
-        data: doc.data(),
-      }))
-    );
-  }); }
-  , []);
+  useEffect(() => { //setRooms() // SET ROOMS 
+									},[]);
   
   return (
   <div className="sidebar">
@@ -63,8 +58,8 @@ function Sidebar() {
 
       <div className="sidebar__chats">
         <div className="sidebar__chatsContainer">
-        {rooms.map(room => (
-          <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+					{rooms.map(room => (
+          <SidebarChat key={room.id} id={room.id} name={room.name} />
         ))}
         </div>
       </div>

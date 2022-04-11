@@ -149,13 +149,9 @@ input {
 .login__formFooter{
     flex:0.2;
     position: relative;
-    bottom: 0%;
+    margin-top: 30px;
 }
 
-.login__formFooter > h4 > .boldLink{
-  color: rgb(147, 228, 255);
-	cursor: pointer;
-}
 
 .login__formFooter > .button {
     position: relative;
@@ -172,4 +168,26 @@ input {
 
 .login__QR{
     flex:0.3;
+}
+
+.toSignUp__container {
+  display: flex;
+}
+
+.toSignUp {
+  margin: 3px;
+  float: left;
+  font-size: 17px;
+  color: rgba(200,200,200,0.8);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.toSignUp__link {
+  cursor: pointer;
+  margin: 3px;
+  font-size: 17px;
+  color: rgb(147, 228, 255);
+  font-weight: 500;
+  text-decoration: none;
 }
