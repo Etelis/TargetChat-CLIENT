@@ -15,6 +15,7 @@ function Chat() {
 	const [input, setInput] = useState('');
 	const [state, dispatch] = useStateValue();
 	const { roomId } = useParams();
+	const [roomPic, setRoomPic] = useState(null);
 	const [roomName, setRoomName] = useState('');
 	const [messages, setMessages] = useState([]);
 	const [emojis, setEmojis] = useState(false);
@@ -30,12 +31,15 @@ function Chat() {
       setRoomName(state.chats.find((e) => {
         return e.id == roomId
 			}).name);
+			setRoomPic(state.chats.find((e) => {
+        return e.id == roomId
+			}).profilePic);
     }
 	}, [roomId,input]);
 
 	useEffect (() =>{
 		messageEndRef.current?.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
-	}, [messages]);
+	}, [messages,input]);
 
 	const sendMessage = (e) => {
 		e.preventDefault();
@@ -50,7 +54,7 @@ function Chat() {
 		<div className="chat">
 			<div className="chat__header">
 									<div className='chat__headerIcon'>
-					<Avatar />
+					<Avatar src={roomPic} />
 					</div>
 				<div className="chat__headerInfo">
 					<h3> {roomName}</h3>

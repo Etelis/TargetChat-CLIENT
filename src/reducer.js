@@ -1,13 +1,16 @@
 
 export const initialState = {
     user: null,
+		displayName: null,
+		password: null,
     profilePic: null,
     chats: [],
 };
 
 export const actionTypes = {
     SET_USER: "SET_USER",
-    ADD_CHATS: "ADD_CHATS"
+		SET_ACCOUNT: "SET_ACCOUNT",
+    ADD_CHATS: "ADD_CHATS",
 };
 
 const reducer = (state, action) => {
@@ -23,6 +26,14 @@ const reducer = (state, action) => {
 							...state,
 							chats: [...state.chats, ...action.chats]
             };
+			case actionTypes.SET_ACCOUNT:
+					return {
+						...state,
+						user: action.user,
+						displayName: action.displayName,
+						password: action.password,
+						profilePic: action.profilePic
+					};
 
         default:
             return state;

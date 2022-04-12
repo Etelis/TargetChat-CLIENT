@@ -9,6 +9,7 @@ import PersonAddTwoToneIcon from '@material-ui/icons/PersonAddTwoTone';
 import SidebarChat from "./SidebarChat";
 import { useStateValue } from './StateProvider';
 import { actionTypes } from './reducer';
+import background from "./background.jpg";
 
 function Sidebar() {
 
@@ -23,7 +24,7 @@ function Sidebar() {
       dispatch
     ({
       type: actionTypes.ADD_CHATS,
-      chats: [{id: state.chats.length + 1, name: chatName, message: []}]
+      chats: [{id: state.chats.length + 1, name: chatName, profilePic: background, messages: []}]
     });
     }
   }
@@ -33,6 +34,7 @@ function Sidebar() {
       {
         id: 1,
         name: "Orel",
+				profilePic: background,
         messages: 
 				[
 				{
@@ -54,6 +56,7 @@ function Sidebar() {
       {
         id: 2,
         name: "Itay",
+				profilePic: background,
         messages: [
 				{
 					name: "Itay",
@@ -72,16 +75,19 @@ function Sidebar() {
       {
         id: 3,
         name: "Amit",
+				profilePic: background,
         messages: []
       },
       {
         id: 4,
         name: "Maayan",
+				profilePic: background,
         messages: []
       },
       {
         id: 5,
         name: "Yuval",
+				profilePic: background,
         messages: []
       },
     ];
@@ -104,7 +110,7 @@ function Sidebar() {
   return (
   <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src={state.user?.photoURL} />
+        <Avatar src={state.profilePic} />
         <div className="sidebar__headerRight">
             <div onClick={addPerson}>      
               <IconButton>
@@ -130,7 +136,7 @@ function Sidebar() {
       <div className="sidebar__chats">
         <div className="sidebar__chatsContainer">
 					{rooms.map(room => (
-          <SidebarChat key={room.id} id={room.id} name={room.name} />
+          <SidebarChat profilePic={room.profilePic} id={room.id} name={room.name} />
         ))}
         </div>
       </div>

@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import "./SidebarChat.css";
 
 
-function SidebarChat({ id, name, addNewChat }) {
-	console.log(name);
+function SidebarChat({ id, name, profilePic }) {
+	console.log(name, profilePic);
   return (
     <Link to={`/rooms/${id}`}>
     <div className="sidebarChat">
         <div className="sidebarChat__profilePic">
-          <Avatar />
+        <Avatar src={profilePic} />
         </div>
         <div className="sidebarChat__info">
           <h2>

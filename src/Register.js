@@ -13,22 +13,32 @@ function Register() {
   };
   
   const [state, dispatch] = useStateValue();
-  const initialValues = {userName: "", password: "", verify_password: "", displayname: "", photo: ""};
+  const initialValues = {userName: "", password: "", verify_password: "", displayname: "", photo: null};
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  
+
+	// This function handles changing of the current photo.
+	const onImageChange = (event) => {
+		 if (event.target.files && event.target.files[0]) {
+			 setFormValues({...formValues, photo: URL.createObjectURL(event.target.files[0])});
+		 }
+	}
+
+	// handles all other changes.
   const handleChange = (e) => {
         const{name, value} = e.target;
         setFormValues({...formValues, [name]: value});
     }
-  
+
+	// on click sumbit
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
     }
-  
+
+	// validator.
     const validate = (values) => {
         const errors = {};
         const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -58,8 +68,12 @@ function Register() {
         console.log(formErrors);
         if(Object.keys(formErrors).length === 0 && isSubmit) {
             dispatch({
-            type: actionTypes.SET_USER,
-            user: formValues.userName});
+            type: actionTypes.SET_ACCOUNT,
+            user: formValues.userName,
+						password: formValues.password,
+						displayName: formValues.displayname,
+						profilePic: formValues.photo,
+						});
         }
     }, [formErrors]);
   
@@ -97,11 +111,11 @@ function Register() {
                     </div>
                     <div className='field'>
                         <label htmlFor="photo">Please upload a photo</label>
-                        <input type="file" name="photo" id="photo" value={formValues.photo}
-                        onChange={handleChange}></input>
+                        <input type="file" name="photo" id="photo" accept="image/*" multiple = "false" onChange={onImageChange} />
                         <span class="error">{formErrors.photo}</span>
                     </div>
                 </div>
+							
                 <div className='register__formFooter'>
                     <Button variant="contained" className='button' color='primary' onClick={handleSubmit}>
                         Register
