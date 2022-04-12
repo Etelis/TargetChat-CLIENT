@@ -14,19 +14,19 @@ function App() {
     <Router>
     <div className="app">
       {!user ? (
-        <Login />
+				<Routes>
+					<Route path="*" element={ <Login /> } />
+					<Route path="/register" element={ <Register /> } />
+				</Routes>
       ) : (
-			user === "toRegister" ? (
-				<Register />
-			) : (
 			 <div className="app_body"> 
           <Routes>
             <Route path="/rooms/:roomId" element={[<Sidebar />, <Chat />]} />
-            <Route path="/" element={[<Sidebar />]} />
+            <Route path="*" element={[<Sidebar />]} />
           </Routes>
         </div>
 			)
-      )}
+      }
       </div>
 		</Router>
   );

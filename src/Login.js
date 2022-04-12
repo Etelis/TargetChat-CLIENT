@@ -8,79 +8,60 @@ import { actionTypes } from './reducer';
 import QR from "./qr.png";
 import GoogleIcon from '@mui/icons-material/Google';
 import { ConstructionOutlined } from '@mui/icons-material';
+import { Link } from "react-router-dom";
 
 
 function Login() {
-    const toSignUp = () => {
-        dispatch({
-              type: actionTypes.SET_USER,
-              user: "toRegister"});
-    };
+		const inputInitialState = {userName: '', password: ''};
+		const errorOnFieldsInitialize = {userField: false, passwordField: false};
     const [state, dispatch] = useStateValue();
-    const [input, setInput] = useState
-    ({
-        userName: '',
-        password: ''
-    });
-    const [requiredField, setRequiredField] = useState
-    ({
-        userNameField: true,
-        passwordField: true
-    });
-    
-    const [errorFields, setErrorFirlds] = useState(true);
+    const [formValues, setFormValues] = useState(inputInitialState);
+    const [errorFields, setErrorFields] = useState(errorOnFieldsInitialize);
+  	const [formErrors, setFormErrors] = useState({});
+	  const [isSubmit, setIsSubmit] = useState(false);
 
-    const handleUserNameChange = (e) => {
-        let updatedVal = 
-        {
-            userName: e.target.value,
-            password: input.password,
-        };
+		const handleChange = (e) => {
+			const {name, value} = e.target;
+			setFormValues({...formValues, [name]: value});
+		};
 
-        setInput(input => 
-        ({
-            ...input,
-            ...updatedVal
-        }));
-        console.log("Email is: ", input.userName);
-        console.log("Password is: ", input.password);
-    };
-
-    const handlePassChange = (e) => {
-        let updatedVal = 
-        {
-            userName: input.userName,
-            password: e.target.value,
-        };
-
-        setInput(input => 
-        ({
-            ...input,
-            ...updatedVal
-        }));
-    };
-
-    const sendLogin = (e) => {
-        e.preventDefault();
-        let re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        let requiredFields = {
-            userNameField: true,
-            passwordField: true,
+    const validate = (values) => {
+        const errors = {};
+				const errorOnFields = errorOnFieldsInitialize;
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+			
+        if(!values.userName) {
+            errors.userName = " - this field is required!"
+						errorOnFields.userField = true;
         }
-
-        if (!input.userName){
-            requiredFields.userNameField = false
+			
+			  if(!regex.test(values.password)) {
+            errors.password = " - password does not meet the password policy requirements"
+						errorOnFields.passwordField = true;
         }
-
-        if ( !re.test(input.password) ){
-            requiredFields.passwordField = false
+			
+        if(!values.password) {
+            errors.password = " - this field is required!"
+						errorOnFields.passwordField = true;
         }
-
-        setRequiredField(requiredField => ({
-            ...requiredField,
-            ...requiredFields
-        }))
+				setErrorFields(errorOnFields);
+        return errors;
     }
+
+	  const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormErrors(validate(formValues));
+        setIsSubmit(true);
+    }
+
+	  useEffect(() => {
+        console.log(formErrors);
+        if(Object.keys(formErrors).length === 0 && isSubmit) {
+					//LOGIN LOGIC
+        }
+    }, [formErrors]);
+
+	
     // const signInGoogle = () => {
     //     signInWithPopup(auth, provider)
     //     .then((result) => { dispatch({
@@ -101,44 +82,39 @@ function Login() {
                 </div>
                 <div className='login__formBody'>
                     <div className='login__formBodyEmail'>
-                        {requiredField.userNameField ? (
-                            errorFields ? (
+											{errorFields.userField ? (
+																<label htmlFor="ephone" className='attention'>USERNAME{formErrors.userName} </label>
+                            ) : (
                                 <label htmlFor="ephone">USERNAME</label>
-                            ) : (
-                                <label htmlFor="ephone" className='attention'>USERNAME - login or password is invalid! </label>
-                            )
-                        ) : (
-                            <label htmlFor="ephone" className='attention'>USERNAME - this field is required! </label>
-                        )}
-                        <input type="text" name="ephone" id="ephone" value={input.userName}
-                               onChange={handleUserNameChange} />
+                      )}
+                        <input type="text" name="userName" id="ephone" value={formValues.userName}
+                               onChange={handleChange} />
                     </div>
+									
                     <div className='login__formBodyPassword'>
-                        {requiredField.passwordField ? ( 
-                            errorFields ? (
-                                <label htmlFor="password">PASSWORD</label>
+                        
+											{errorFields.passwordField ? (
+															<label htmlFor="password" className='attention'>PASSWORD {formErrors.password} </label>
                             ) : (
-                                <label htmlFor="password" className='attention'>PASSWORD - login or password is invalid! </label>
-                            )
-                            ) : (
-                                <label htmlFor="password" className='attention'>PASSWORD - password does not meet the password policy requirements</label>
+                              <label htmlFor="password">PASSWORD</label>
                             )}
-                        <input type="password" name="password" id="password" value={input.password}
-                               onChange={handlePassChange} />
+                        <input type="password" name="password" id="password" value={formValues.password} onChange={handleChange} />
                     </div>
                 </div>
                 <div className='login__formFooter'>
-                    <Button variant="contained" className='button' color='primary' onClick={sendLogin} type="submit">
+                    <Button variant="contained" className='button' color='primary' onClick={handleSubmit} type="submit">
                         Login
                     </Button>
                 </div>
                 <div className='toSignUp__container'>
                       <div className='toSignUp'>
-                          Already have an account?
+                          Need an account?
                       </div>
-                      <div className='toSignUp__link' onClick={toSignUp}>
-                          Sign in
+									<Link to={"/register"}>
+                      <div className='toSignUp__link'>
+                          Sign up
                       </div>
+									</Link>
                   </div>
             </div>
             <div className='login__QR'>

@@ -4,13 +4,9 @@ import { Button, IconButton } from "@material-ui/core";
 import {useState, useEffect} from "react";
 import { useStateValue } from './StateProvider';
 import { actionTypes , dispatch} from './reducer';
+import { Link } from "react-router-dom";
 
 function Register() {
-  const toSignIn = () => {
-      dispatch({
-            type: actionTypes.SET_USER,
-            user: ""});
-  };
   
   const [state, dispatch] = useStateValue();
   const initialValues = {userName: "", password: "", verify_password: "", displayname: "", photo: null};
@@ -125,9 +121,12 @@ function Register() {
                     <div className='toSignIn'>
                         Already have an account?
                     </div>
-                    <div className='toSignIn__link' onClick={toSignIn}>
+									
+                  <Link to={"/login"}>  
+										<div className='toSignIn__link' > 
                         Sign in
                     </div>
+								  </Link>
                 </div>
             </div>
         </div>
