@@ -13,7 +13,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 function Chat() {
 	const [input, setInput] = useState('');
-	const [{user}, dispatch] = useStateValue();
+	const [state, dispatch] = useStateValue();
 	const { roomId } = useParams();
 	const [roomName, setRoomName] = useState('');
 	const [messages, setMessages] = useState([]);
@@ -22,13 +22,15 @@ function Chat() {
 	const messageEndRef = useRef(null);
 
 	useEffect (() => {
-		// ROOM ID from app.js should be assinged here.
-		if (roomId) {
-			// set room name according to roomId
-			setRoomName();
-			// set all messages accoring to roomId
-			//setMessages();
-			}
+	if (roomId)
+    {
+      setMessages(state.chats.find((e) => {
+        return e.id == roomId
+			}).messages);
+      setRoomName(state.chats.find((e) => {
+        return e.id == roomId
+			}).name);
+    }
 	}, [roomId,input]);
 
 	useEffect (() =>{
@@ -37,11 +39,11 @@ function Chat() {
 
 	const sendMessage = (e) => {
 		e.preventDefault();
-		console.log("you typed >>>", input);
-
-		// append new message to given chat.
-
-		setInput("");
+    const newMessage = {name: state.user, content: input, time: 1, reciever: false}
+    state.chats.find((e) => {
+        return e.id == roomId
+			}).messages.push(newMessage);
+  setInput("");
 	};
 
 	return (
@@ -58,8 +60,8 @@ function Chat() {
 			</div>
 			<div className="chat__body">
 				{messages.map((message) => (
-				<p className={`chat__message ${ message.name == user.displayName && `chat__messageReceived` }`}>
-					{message.message}
+				<p className={`chat__message ${ message.name == state.user && `chat__messageReceived` }`}>
+					{message.content}
 					<span className="chat__name">{message.name}</span>
 				</p>
 				))}

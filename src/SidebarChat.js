@@ -5,6 +5,7 @@ import "./SidebarChat.css";
 
 
 function SidebarChat({ id, name, addNewChat }) {
+	console.log(name);
   return (
     <Link to={`/rooms/${id}`}>
     <div className="sidebarChat">

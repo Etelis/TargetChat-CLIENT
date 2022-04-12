@@ -19,12 +19,11 @@ const reducer = (state, action) => {
                 user: action.user,
             };
         case actionTypes.ADD_CHATS:
-					console.log("Arrived at ADD_CHATS")
-					console.log("arrived with action.chats: ", action.chats)
             return {
 							...state,
 							chats: [...state.chats, ...action.chats]
             };
+
         default:
             return state;
     }

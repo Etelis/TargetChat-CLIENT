@@ -1,3 +1,4 @@
+
 import React, {useState,useEffect} from 'react';
 import "./Sidebar.css";
 import { Avatar, IconButton } from "@material-ui/core";
@@ -22,7 +23,7 @@ function Sidebar() {
       dispatch
     ({
       type: actionTypes.ADD_CHATS,
-      chats: [{id: 5, name: chatName, message: []}]
+      chats: [{id: state.chats.length + 1, name: chatName, message: []}]
     });
     }
   }
@@ -32,12 +33,41 @@ function Sidebar() {
       {
         id: 1,
         name: "Orel",
-        messages: []
+        messages: 
+				[
+				{
+					name: "Orel",
+					timestamp: 2231,
+					content: "orel",
+					reciver: true
+        }
+          ,
+				{
+					name: state.user,
+					timestamp: 231213,
+					content: "NAH",
+					reciver: false
+				}
+          
+				]
       },
       {
         id: 2,
         name: "Itay",
-        messages: []
+        messages: [
+				{
+					name: "Itay",
+					timestamp:231231,
+					content: "ahhhhh",
+					reciver: true
+				}
+	        ,
+				{
+					name: state.user,
+					timestamp:231231,
+					content: "fuck meee",
+					reciver: false
+				}]
       },
       {
         id: 3,
@@ -64,12 +94,10 @@ function Sidebar() {
   
  useEffect(() =>  {
 	  initalizeChats();
-  
     setRooms(state.chats);
   },[]);
 
   useEffect(() => {
-    console.log("chats: ", state.chats);
     setRooms(state.chats);
   }, [state]);
 	
