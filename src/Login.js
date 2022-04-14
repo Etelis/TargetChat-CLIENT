@@ -36,7 +36,7 @@ function Login() {
         }
 			
 			  if(!regex.test(values.password)) {
-            errors.password = " - password does not meet the password policy requirements"
+            errors.password = " - password does not meet the password requirements"
 						errorOnFields.passwordField = true;
         }
 			
@@ -82,22 +82,13 @@ function Login() {
                 </div>
                 <div className='login__formBody'>
                     <div className='login__formBodyEmail'>
-											{errorFields.userField ? (
-																<label htmlFor="ephone" className='attention'>USERNAME{formErrors.userName} </label>
-                            ) : (
-                                <label htmlFor="ephone">USERNAME</label>
-                      )}
+											  <label htmlFor="ephone" className={formErrors.userName && 'attention'}>USERNAME{formErrors.userName} </label>
                         <input type="text" name="userName" id="ephone" value={formValues.userName}
                                onChange={handleChange} />
                     </div>
 									
                     <div className='login__formBodyPassword'>
-                        
-											{errorFields.passwordField ? (
-															<label htmlFor="password" className='attention'>PASSWORD {formErrors.password} </label>
-                            ) : (
-                              <label htmlFor="password">PASSWORD</label>
-                            )}
+											<label htmlFor="password" className={formErrors.password && 'attention'} >PASSWORD {formErrors.password} </label>
                         <input type="password" name="password" id="password" value={formValues.password} onChange={handleChange} />
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Chat.css';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, IconButton, Badge } from '@material-ui/core';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import { useParams } from "react-router-dom";
@@ -75,20 +75,21 @@ function Chat() {
 				<div className="chat__footerIcons">
 					<div onMouseEnter={() => setAttachMenu(true)}
 						 onMouseLeave={() => setAttachMenu(false)}>
-						{showAttachMenu && 
-						<span className='attachmentMenu'>
-							<ul>
-								<li>
-									<InsertPhotoIcon />
-								</li>
-								<li>
-									<UploadFileIcon />
-								</li> 
-							</ul>
-						</span>
-						}	
 						<IconButton>
 							<AttachFileIcon />
+						{showAttachMenu && 
+							<span className='attachmentMenu'>
+								<ul>
+									<li>
+										<Badge color="secondary" overlap="circular" badgeContent=" ">
+											<InsertPhotoIcon />
+										</Badge>
+									</li>
+									<li>
+										<UploadFileIcon />
+									</li> 
+								</ul>
+							</span>}
 						</IconButton>
 					</div>
 					<div onMouseEnter={() => setEmojis(true)}

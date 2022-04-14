@@ -39,23 +39,23 @@ function Register() {
         const errors = {};
         const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if(!values.userName) {
-            errors.userName = "Username is required!"
+            errors.userName = " - Username is required!"
         }
         if(!values.password) {
-            errors.password = "Password is required!"
-            errors.verify_password = "Passwords are not matching!"
+            errors.password = " - Password is required!"
+            errors.verify_password = " - Passwords are not matching!"
         }
         if(!regex.test(values.password)) {
-            errors.password = "Minimum eight characters, at least one letter and one number"
+            errors.password = " - Minimum eight characters, at least one letter and one number"
         }
         if(values.password != values.verify_password) {
-            errors.verify_password = "Passwords are not matching!"
+            errors.verify_password = " - Passwords are not matching!"
         }
         if(!values.displayname) {
-            errors.displayname = "Display Name is required!"
+            errors.displayname = " - Display Name is required!"
         }
         if(!values.photo) {
-            errors.photo = "Photo is required!"
+            errors.photo = " - Photo is required!"
         } 
         return errors;
     }
@@ -82,33 +82,28 @@ function Register() {
                 </div>
                 <div className='register__formBody'>
                     <div className='field'>
-                        <label htmlFor="userName">USERNAME</label>
+                        <label htmlFor="userName" className={formErrors.userName && "attention"}>USERNAME{formErrors.userName}</label>
                         <input type="text" name="userName" id="userName" value={formValues.userName} 
                         onChange={handleChange}></input>
-                        <span class="error">{formErrors.userName}</span>
                     </div>
                     <div className='field'>
-                        <label htmlFor="password">PASSWORD</label>
+                        <label htmlFor="password" className={formErrors.password && "attention"}>PASSWORD{formErrors.password}</label>
                         <input type="password" name="password" id="password" value={formValues.password}
                          onChange={handleChange}></input>
-                         <span class="error">{formErrors.password}</span>
                     </div>
                     <div className='field'>
-                        <label htmlFor="verify_password">VERIFY PASSWORD</label>
+                        <label htmlFor="verify_password" className={formErrors.verify_password && "attention"} >VERIFY PASSWORD{formErrors.verify_password}</label>
                         <input type="password" name="verify_password" id="verify_password" value={formValues.verify_password}
                         onChange={handleChange}></input>
-                        <span class="error">{formErrors.verify_password}</span>
                     </div>
                     <div className='field'>
-                        <label htmlFor="displayname">DISPLAY NAME</label>
+                        <label htmlFor="displayname" className={formErrors.displayname && "attention"} >DISPLAY NAME{formErrors.displayname}</label>
                         <input type="displayname" name="displayname" id="displayname" value={formValues.displayname}
                         onChange={handleChange}></input>
-                        <span class="error">{formErrors.displayname}</span>
                     </div>
                     <div className='field'>
-                        <label htmlFor="photo">Please upload a photo</label>
+                        <label htmlFor="photo" className={formErrors.photo && "attention"}>PHOTO{formErrors.photo}</label>
                         <input type="file" name="photo" id="photo" accept="image/*" multiple = "false" onChange={onImageChange} />
-                        <span class="error">{formErrors.photo}</span>
                     </div>
                 </div>
 							

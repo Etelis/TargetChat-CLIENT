@@ -137,13 +137,17 @@ color: white;
 }
 
 .attachmentMenu{
-  position: absolute;
-  bottom: 50px;
-  left: 21%;
+	position: absolute;
+	bottom: 25px;
+	left: -25px;
+	z-index: 1000;
+	box-sizing: initial;
+	width: 53px;
+	pointer-events: all;
 }
 .attachmentMenu > ul{
   list-style-type: none;
 }
 .attachmentMenu > ul > li:not(:last-child) { 
-  margin-bottom: 1px;  
+  margin-bottom: 10px;  
 }
