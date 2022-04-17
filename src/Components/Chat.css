@@ -164,3 +164,8 @@ color: white;
 .attachmentMenu > ul > li:not(:last-child) { 
   margin-bottom: 10px;  
 }
+
+#player{
+border-radius: 10px;
+background-color: inherit;
+}

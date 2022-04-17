@@ -13,6 +13,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import PopUpDisplay from './PopUpDisplay'
+import RecordPopUp from './RecordPopUp'
 
 function Chat() {
   const [isSubmited, setIsSubmited] = useState(false);
@@ -28,6 +29,8 @@ function Chat() {
   const [showAttachMenu, setAttachMenu] = useState(false);
   const messageEndRef = useRef(null);
   const [popUp, setPopUp] = useState("");
+  const [record, setRecord] = useState("");
+  const [showRecord, setShowRecord] = useState(false);
   
   useEffect(() => {
     if (roomId) {
@@ -61,6 +64,15 @@ function Chat() {
     setIsSubmited(false);
   }, [isSubmited]);
 
+  useEffect(() => {
+    if(record != "") {
+    console.log(record);
+    setInput(<audio src={record} controls />);
+    attachmentSubmitRef.current.click();
+    setRecord("");
+    }
+  }, [record]);
+  
   const sendMessage = (e) => {
     e.preventDefault();
     setIsSubmited(true);
@@ -101,7 +113,6 @@ function Chat() {
     return true
   }
 
-
   return (
     <div className="chat">
       { popUp != "" && <PopUpDisplay handleClick={()=> setPopUp("")} source={popUp} />}
@@ -115,6 +126,7 @@ function Chat() {
         </div>
       </div>
       <div className="chat__body">
+				<audio src={record} type="audio" control/>
         {messages.map((message) => (
           <p className={`chat__message ${message.name == state.user && `chat__messageReceived`}`}>
             {message.content}
@@ -124,20 +136,20 @@ function Chat() {
         <span ref={messageEndRef} />
       </div>
       <div className="chat__footer">
-        <div className="chat__footerIcons">
+			{!showRecord ? 
+					(<>
+					<div className="chat__footerIcons">
           <div onMouseEnter={() => setAttachMenu(true)}
             onMouseLeave={() => setAttachMenu(false)}>
             <IconButton>
               <AttachFileIcon />
               {showAttachMenu &&
                 <span className='attachmentMenu'>
-                  <ul>
-                    
+                  <ul>  
                     <li className="attachmentMenu__item">
                       <input type='file' id='file' ref={inputFile} onChange={onImageChange} style={{ display: 'none' }} accept="image/*" multiple="false" />
                       <img src={imageAttachment} alt="" onClick={uploadFile} />
                     </li>
-                    
                   </ul>
                 </span>}
             </IconButton>
@@ -156,7 +168,7 @@ function Chat() {
             </IconButton>
           </div>
         </div>
-        <form>
+				<form>
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
@@ -165,7 +177,11 @@ function Chat() {
           />
           <button onClick={sendMessage} ref={attachmentSubmitRef} type="submit" />
         </form>
-        <MicRoundedIcon />
+        <MicRoundedIcon onClick={() => setShowRecord(true)} />
+					</>) 
+					:
+					(<RecordPopUp setRecord={setRecord} setRecordMenu={setShowRecord} />)}
+        {console.log(record)}
       </div>
     </div>
   );
