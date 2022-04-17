@@ -108,9 +108,14 @@ function Chat() {
     }
   }
 
-  // TODO
   function validateFileIsVideo(fileName) {
-    return true
+    var idxDot = fileName.lastIndexOf(".") + 1;
+    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if (extFile == "mp4" || extFile == "mvk" || extFile == "avi") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   return (
@@ -147,7 +152,7 @@ function Chat() {
                 <span className='attachmentMenu'>
                   <ul>  
                     <li className="attachmentMenu__item">
-                      <input type='file' id='file' ref={inputFile} onChange={onImageChange} style={{ display: 'none' }} accept="image/*" multiple="false" />
+                      <input type='file' id='file' ref={inputFile} onChange={onImageChange} style={{ display: 'none' }} accept="image/* video/*" multiple="false" />
                       <img src={imageAttachment} alt="" onClick={uploadFile} />
                     </li>
                   </ul>
