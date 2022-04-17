@@ -14,6 +14,12 @@ function Sidebar() {
 
   const [rooms, setRooms] = useState([]);
   const [state, dispatch] = useStateValue();
+	const [searchInput,setSearchInput] = useState("");
+	
+	const searchHandle = (e) => {
+		setSearchInput(e.target.value);
+		setRooms(rooms.filter((element) => { return element.name.toLowerCase().includes(e.target.value.toLowerCase()) }));
+	}
   
   // once addPerson was triggered, a prompt will pop and the current logged-in user will add new chat to his chats.
   const addPerson = () => {
@@ -29,8 +35,9 @@ function Sidebar() {
 
 // This useEffect will be triggered once at the beginning only.
  useEffect(() =>  {
+	 if(!searchInput)
     setRooms(state.chats);
-  },[]);
+  },[searchInput]);
 
   // this useEffect will be triggered evertime there is a change in the state object.
   useEffect(() => {
@@ -59,7 +66,7 @@ function Sidebar() {
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
         <SearchIcon />
-        <input placeholder="Search or start a new chat" type="text" />
+        <input placeholder="Search or start a new chat" type="text" value={searchInput} onChange={searchHandle}/>
         </div>
       </div>
 
