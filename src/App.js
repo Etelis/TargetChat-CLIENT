@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Chat from './Chat';
+import React from 'react';
+import Sidebar from './Components/Sidebar';
+import Chat from './Components/Chat';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
-import Login from './Login';
-import Register from './Register';
-import { useStateValue } from './StateProvider';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import { useStateValue } from './Components/StateProvider';
 
 
 function App() {

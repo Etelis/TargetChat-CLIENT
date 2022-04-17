@@ -1,4 +1,3 @@
-
 import React, {useState,useEffect} from 'react';
 import "./Sidebar.css";
 import { Avatar, IconButton } from "@material-ui/core";
@@ -8,16 +7,15 @@ import SearchIcon from '@material-ui/icons/Search';
 import PersonAddTwoToneIcon from '@material-ui/icons/PersonAddTwoTone';
 import SidebarChat from "./SidebarChat";
 import { useStateValue } from './StateProvider';
-import { actionTypes } from './reducer';
-import background from "./background.jpg";
+import { actionTypes } from '../controller/userDBController';
+import background from "../images/background.jpg";
 
 function Sidebar() {
 
-  const [newContact, setNewContact] = useState("");
   const [rooms, setRooms] = useState([]);
   const [state, dispatch] = useStateValue();
-  const [add, setAdd] = useState(true);
   
+  // once addPerson was triggered, a prompt will pop and the current logged-in user will add new chat to his chats.
   const addPerson = () => {
     const chatName = prompt("Enter desired user");
     if(chatName) {
@@ -28,81 +26,13 @@ function Sidebar() {
     });
     }
   }
-	const initalizeChats = () => {
-    const sampleRooms = 
-    [
-      {
-        id: 1,
-        name: "Orel",
-				profilePic: background,
-        messages: 
-				[
-				{
-					name: "Orel",
-					timestamp: 2231,
-					content: "orel",
-					reciver: true
-        }
-          ,
-				{
-					name: state.user,
-					timestamp: 231213,
-					content: "NAH",
-					reciver: false
-				}
-          
-				]
-      },
-      {
-        id: 2,
-        name: "Itay",
-				profilePic: background,
-        messages: [
-				{
-					name: "Itay",
-					timestamp:231231,
-					content: "ahhhhh",
-					reciver: true
-				}
-	        ,
-				{
-					name: state.user,
-					timestamp:231231,
-					content: "fuck meee",
-					reciver: false
-				}]
-      },
-      {
-        id: 3,
-        name: "Amit",
-				profilePic: background,
-        messages: []
-      },
-      {
-        id: 4,
-        name: "Maayan",
-				profilePic: background,
-        messages: []
-      },
-      {
-        id: 5,
-        name: "Yuval",
-				profilePic: background,
-        messages: []
-      },
-    ];
-    dispatch
-    ({
-      type: actionTypes.ADD_CHATS,
-      chats: sampleRooms
-    });
-  }
-  
+
+// This useEffect will be triggered once at the beginning only.
  useEffect(() =>  {
-	  initalizeChats();
     setRooms(state.chats);
   },[]);
 
+  // this useEffect will be triggered evertime there is a change in the state object.
   useEffect(() => {
     setRooms(state.chats);
   }, [state]);
@@ -136,7 +66,7 @@ function Sidebar() {
       <div className="sidebar__chats">
         <div className="sidebar__chatsContainer">
 					{rooms.map(room => (
-          <SidebarChat profilePic={room.profilePic} id={room.id} name={room.name} />
+          <SidebarChat profilePic={room.profilePic} id={room.id} name={room.name} lastMessage={room.messages.at(-1) ? (room.messages.at(-1)) : ({content: "", timestamp: ""})} />
         ))}
         </div>
       </div>

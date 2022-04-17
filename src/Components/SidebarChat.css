@@ -19,7 +19,7 @@
   background-color:rgb(64, 63, 63);
 }
 .sidebarChat__info{
-  font-size: 16px;
+font-size: 12px;
 font-family: "Roboto",-apple-system,BlinkMacSystemFont,"Apple Color Emoji","Segoe UI",Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
 color: rgb(170, 170, 170);
 font-weight: 400;
@@ -28,6 +28,10 @@ line-height: 1.5;
   margin-top: -0.125rem;
   text-decoration:none !important;
 
+}
+
+.sidebarChat__info > .timestamp{
+	font-size: 8px;
 }
 
 .sidebarChat__info > h2{
@@ -41,4 +45,9 @@ line-height: 1.5;
 a {
   text-decoration: none !important;
   color: black;
+}
+
+.sidebarChat__info > .lastMessage >.image_message{
+  width: 20px;
+  height: 20px;
 }

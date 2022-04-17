@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import "./Register.css";
-import { Button, IconButton } from "@material-ui/core";
-import {useState, useEffect} from "react";
+import { Button} from "@material-ui/core";
 import { useStateValue } from './StateProvider';
-import { actionTypes , dispatch} from './reducer';
+import { actionTypes , dispatch} from '../controller/userDBController';
 import { Link } from "react-router-dom";
 
 function Register() {
@@ -61,7 +60,6 @@ function Register() {
     }
   
     useEffect(() => {
-        console.log(formErrors);
         if(Object.keys(formErrors).length === 0 && isSubmit) {
             dispatch({
             type: actionTypes.SET_ACCOUNT,

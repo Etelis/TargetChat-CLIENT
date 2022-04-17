@@ -26,6 +26,7 @@
 }
 .sidebar__searchContainer{
   display: flex;
+	margin: 20px;
   align-items: center;
   background-color: #515050;
   width: 100%;

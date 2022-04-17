@@ -1,7 +1,7 @@
 .app {
   display: grid;
   place-items: center;
-  background-image: url("starry_night_192398.jpg");
+  background-image: url("images/starry_night_192398.jpg");
   top: 20px;
   height: 100vh;
 }

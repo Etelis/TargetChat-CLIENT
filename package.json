@@ -14,10 +14,12 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.1",
     "emoji-picker-react": "^3.5.1",
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
+    "react-modal-image": "^2.5.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "reactstrap": "^9.0.1"

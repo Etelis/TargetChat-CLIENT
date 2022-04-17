@@ -9,7 +9,7 @@
     width: 100vw;
     display: grid;
     place-items: center;
-    background-image: url("background.jpg");
+    background-image: url("../images/background.jpg");
     background-size:cover;
     background-color: #cccccc;
 }
@@ -22,6 +22,7 @@
     border-radius: 8px;
     padding: 20px;
     min-width: 784px;
+    max-width: 784px;
     min-height: 350px;
 }
 
@@ -41,16 +42,6 @@
   }
 
 .login__formFooter > h4 {
-    max-width: 240px;
-    margin: 10px 0px 0px 0px;
-    font-weight: 300;
-    color: #B9BBBE;
-  }
-
-.login__QR > h5 {
-    position: relative;
-    right: 5%;
-    top: 5%;
     max-width: 240px;
     margin: 10px 0px 0px 0px;
     font-weight: 300;
@@ -78,8 +69,19 @@
     padding: 3px;
 }
 
+.login__QR > h5 {
+	margin-top: 30px;
+	font-size: 17px;
+}
+
+.login__QR > h4 {
+	margin-top: 15px;
+	font-size: 15px;
+}
+
 .login__form{
     flex:0.6;
+		padding: 20px;
     flex-direction: column;
     display: flex;
 }
@@ -87,14 +89,13 @@
 .login__formHeader{
     position: relative;
     flex: 0.2;
-    top: -5px;
     text-align: center;
     
 }
 
 .login__formHeader > h4 {
     position:relative;
-    top: -35px;
+    top: 0px;
     text-align: center;
     width: auto;
     font-size: 16px;
@@ -111,7 +112,7 @@
 
 .login__formBody{
     flex: 0.4;
-    
+    margin-top: 50px;
 }
 
 .login__formBodyEmail{
