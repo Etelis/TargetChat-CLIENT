@@ -1,0 +1,12 @@
+form {
+    padding-top: 30px;
+}
+
+input {
+    height: 100%;
+}
+
+#form-text{
+    position: relative;
+    left: 27%;
+}

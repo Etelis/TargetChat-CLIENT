@@ -1,38 +1,24 @@
 import React, {useState,useEffect} from 'react';
 import "./Sidebar.css";
-import { Avatar, IconButton } from "@material-ui/core";
-import ChatIcon from '@material-ui/icons/Chat';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SearchIcon from '@material-ui/icons/Search';
-import PersonAddTwoToneIcon from '@material-ui/icons/PersonAddTwoTone';
 import SidebarChat from "./SidebarChat";
 import { useStateValue } from './StateProvider';
-import { actionTypes } from '../controller/userDBController';
-import background from "../images/background.jpg";
+import AddChatPrompt from './AddChatPrompt';
+import Avatar from './MediaComponents/Avatar';
+import { BsFillPersonPlusFill, BsThreeDotsVertical, BsSearch } from "react-icons/bs";
+import { Button } from 'react-bootstrap';
 
 function Sidebar() {
 
   const [rooms, setRooms] = useState([]);
   const [state, dispatch] = useStateValue();
 	const [searchInput,setSearchInput] = useState("");
-	
+	const [addChat, showAddChat] = useState(false);
+
 	const searchHandle = (e) => {
 		setSearchInput(e.target.value);
 		setRooms(rooms.filter((element) => { return element.name.toLowerCase().includes(e.target.value.toLowerCase()) }));
 	}
   
-  // once addPerson was triggered, a prompt will pop and the current logged-in user will add new chat to his chats.
-  const addPerson = () => {
-    const chatName = prompt("Enter desired user");
-    if(chatName) {
-      dispatch
-    ({
-      type: actionTypes.ADD_CHATS,
-      chats: [{id: state.chats.length + 1, name: chatName, profilePic: background, messages: []}]
-    });
-    }
-  }
-
 // This useEffect will be triggered once at the beginning only.
  useEffect(() =>  {
 	 if(!searchInput)
@@ -46,26 +32,18 @@ function Sidebar() {
 	
   return (
   <div className="sidebar">
+    {addChat && <AddChatPrompt showAddChat={showAddChat} />}
       <div className="sidebar__header">
         <Avatar src={state.profilePic} />
         <div className="sidebar__headerRight">
-            <div onClick={addPerson}>      
-              <IconButton>
-                <PersonAddTwoToneIcon />
-              </IconButton>
-            </div>
-          <IconButton>
-            <ChatIcon />
-          </IconButton>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+          <Button size='sm' onClick={(e) => {showAddChat(true);}} variant="outline-light"> <BsFillPersonPlusFill size="1em" /> </Button>
+          <Button size='sm' variant="outline-light"> <BsThreeDotsVertical /> </Button>
         </div>
       </div>
 
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
-        <SearchIcon />
+        <BsSearch className='icon' />
         <input placeholder="Search or start a new chat" type="text" value={searchInput} onChange={searchHandle}/>
         </div>
       </div>

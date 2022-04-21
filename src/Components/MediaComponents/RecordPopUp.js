@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { render } from "react-dom";
 import useRecorder from "./Recorder";
-import sendAudio from '../images/sendAudio.svg'
-import recordAudio from '../images/RecordAudio.svg'
-import trash from '../images/trash.svg'
-import pause from '../images/pause.svg'
-
+import sendAudio from '../../images/sendAudio.svg'
+import recordAudio from '../../images/RecordAudio.svg'
+import trash from '../../images/trash.svg'
+import pause from '../../images/pause.svg'
+import './RecorderPopUp.css'
+import { Button } from 'react-bootstrap';
 function RecordPopUp({setRecord, setRecordMenu}) {
 	const [showButtons, setShowButtons] = useState({showRecord: true, showPause: false, showBin: false, showSend: false});
 	const [submitAudio, setSubmitAudio] = useState(false);
@@ -48,13 +49,15 @@ function RecordPopUp({setRecord, setRecordMenu}) {
 	}, [submitAudio, setRecord, audioURL]);
 	
   return (
-    <div className="App">
+    <div className="popUp">
       <audio src={audioURL} controls />
-			{showButtons.showRecord && <img src={recordAudio} alt="" name="RECORD" onClick={handleClick} disabled={isRecording} />}
-      {showButtons.showSend && <img src={sendAudio} alt="" name="SEND" onClick={handleClick} />}
-			{showButtons.showBin && <img src={trash} alt="" name="TRASH" onClick={handleClick} />}
-			{showButtons.showPause && <img src={pause} alt="" name="PAUSE" onClick={handleClick} disabled={!isRecording} />}
-    </div>
+	  <div className='popUp__Icons'>
+		{showButtons.showRecord && <Button size="xsm" variant="outline-light"><img src={recordAudio} alt="" name="RECORD" onClick={handleClick} disabled={isRecording} /> </Button>}
+      	{showButtons.showSend &&  <Button size="xsm" variant="outline-light"><img src={sendAudio} alt="" name="SEND" onClick={handleClick} /></Button>}
+		{showButtons.showBin && <Button size="xsm" variant="outline-light"><img src={trash} alt="" name="TRASH" onClick={handleClick} /></Button>}
+		{showButtons.showPause && <Button size="xsm" variant="outline-light"><img src={pause} alt="" name="PAUSE" onClick={handleClick} disabled={!isRecording} /></Button>}
+   	 </div>
+	</div>
   );
 }
 

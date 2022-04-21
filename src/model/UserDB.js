@@ -3,6 +3,7 @@ import yuvalProfilePic from "../images/Yuval.png";
 import orelProfilePic from "../images/Orel.png";
 import itayProfilePic from "../images/Itay.png";
 import emptyUser from "../images/emptyUser.png";
+import ImageMessage from "../Components/MediaComponents/ImageMessage";
 
 const sampleRooms = 
 [
@@ -37,7 +38,7 @@ const sampleRooms =
     id: 4,
     name: "Yuval",
     profilePic: yuvalProfilePic,
-    messages: [{ name: "Itay", timestamp: "13:48", content:  <img src={itayProfilePic} alt="Girl in a jacket" className="image_message"/> , reciver: true }]
+    messages: [{ name: "Itay", timestamp: "13:48", content:  <ImageMessage src={itayProfilePic} /> , reciver: true }]
   },
 ]
 

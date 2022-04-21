@@ -1,0 +1,19 @@
+.popUp{
+    display: flex;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 50px;
+    align-items: center;
+    max-height: 90vh;
+
+}
+.popUp__Icons{
+    margin-left: 20px;
+    justify-content: space-between;  
+}
+
+.popUp__Icons > img {
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+}

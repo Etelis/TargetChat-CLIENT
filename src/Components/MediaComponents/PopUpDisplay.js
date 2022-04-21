@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Modal, Button} from 'react-bootstrap';
+import {Modal, Button, Image} from 'react-bootstrap';
 import './PopUpDisplay.css';
 
 function PopUpDisplay(props) {
@@ -11,8 +11,9 @@ function PopUpDisplay(props) {
         aria-labelledby="example-custom-modal-styling-title"
       >
         <Modal.Body>
-					{console.log(props.source.type)}
-          {(props.source.id == "video") ? (<video src={props.source.src} className="popUp" type="video/mp4" controls/>) : (<img src={props.source.src} className="popUp" />)}
+          {console.log(props.type)}
+          {props.type === "video" && <video type="video/mp4" controls className='popup_media' src={props.source} />}
+          {props.type === "image" && <img alt='image_popup' className='popup_media' src={props.source} />}
         </Modal.Body>
       </Modal>
     </div>

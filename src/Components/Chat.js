@@ -1,19 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Chat.css';
 import imageAttachment from "../images/photoAttachment.svg";
-import fileAttachment from "../images/fileAttachment.svg";
-import { Avatar, IconButton, Badge } from '@material-ui/core';
-import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
-import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import { actionTypes } from '../controller/userDBController';
 import { useParams } from "react-router-dom";
 import { useStateValue } from './StateProvider';
 import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import PopUpDisplay from './PopUpDisplay'
-import RecordPopUp from './RecordPopUp'
+import PopUpDisplay from './MediaComponents/PopUpDisplay';
+import RecordPopUp from './MediaComponents/RecordPopUp';
+import ImageMessage from './MediaComponents/ImageMessage';
+import VideoMessage from './MediaComponents/VideoMessage';
+import Avatar from './MediaComponents/Avatar';
+import { BsPaperclip, BsEmojiSmileUpsideDown, BsMic} from "react-icons/bs";
+import { Button, Collapse, Fade } from 'react-bootstrap';
 
 function Chat() {
   const [isSubmited, setIsSubmited] = useState(false);
@@ -52,7 +50,6 @@ function Chat() {
 
   useEffect(() => {
     const time = new Date().getHours() + ':' + new Date().getMinutes();
-
     if (isSubmited && input != "") {
       const newMessage = { name: state.user, content: input, timestamp: time, reciever: false }
       state.chats.find((e) => {
@@ -82,17 +79,15 @@ function Chat() {
     inputFile.current.click();
   };
 
-  const onImgClick = (e) => {
-    setPopUp(e.target);
-  } 
-  
   const onImageChange = (event) => {
     if (validateFileIsImg(event.target.files[0].name)) {
-      setInput(<img src={URL.createObjectURL(event.target.files[0])} alt="image" className="image_message" onClick={onImgClick} id="img" />);
+      setInput(<ImageMessage src={URL.createObjectURL(event.target.files[0])} />);
        attachmentSubmitRef.current.click();
+
     } else if(validateFileIsVideo(event.target.files[0].name)) {
-      setInput(<video src={URL.createObjectURL(event.target.files[0])} alt="video" className="image_message" onClick={onImgClick} id="video"/>);
-       attachmentSubmitRef.current.click();
+      setInput(<VideoMessage src={URL.createObjectURL(event.target.files[0])} />);
+      attachmentSubmitRef.current.click();
+       
     } else {
        alert("Only videos or images are valid!");
     }
@@ -101,7 +96,7 @@ function Chat() {
   function validateFileIsImg(fileName) {
     var idxDot = fileName.lastIndexOf(".") + 1;
     var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
       return true;
     } else {
       return false;
@@ -111,7 +106,7 @@ function Chat() {
   function validateFileIsVideo(fileName) {
     var idxDot = fileName.lastIndexOf(".") + 1;
     var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-    if (extFile == "mp4" || extFile == "mvk" || extFile == "avi") {
+    if (extFile === "mp4" || extFile === "mvk" || extFile === "avi") {
       return true;
     } else {
       return false;
@@ -127,13 +122,12 @@ function Chat() {
         </div>
         <div className="chat__headerInfo">
           <h3> {roomName}</h3>
-          <p> Last seen: {messages.at(-1) ? (messages.at(-1).timestamp) : ("Recently")} </p>
+          <p> Last seen: {messages.at(-1) ? (messages.at(-1).timestamp) : ("...")} </p>
         </div>
       </div>
       <div className="chat__body">
-				<audio src={record} type="audio" control/>
         {messages.map((message) => (
-          <p className={`chat__message ${message.name == state.user && `chat__messageReceived`}`}>
+          <p className={`chat__message ${message.name === state.user && `chat__messageReceived`}`}>
             {message.content}
             <span className="chat__timestamp">{message.timestamp}</span>
           </p>
@@ -144,20 +138,25 @@ function Chat() {
 			{!showRecord ? 
 					(<>
 					<div className="chat__footerIcons">
-          <div onMouseEnter={() => setAttachMenu(true)}
-            onMouseLeave={() => setAttachMenu(false)}>
-            <IconButton>
-              <AttachFileIcon />
-              {showAttachMenu &&
+          <div onClick={() => setAttachMenu(!showAttachMenu)}>
+             <Button size='sm' variant="outline-secondary"> 
+               <BsPaperclip size="1.5em" />
+            </Button>
+            
+            {showAttachMenu &&
+              <Fade in={showAttachMenu}> 
                 <span className='attachmentMenu'>
                   <ul>  
                     <li className="attachmentMenu__item">
                       <input type='file' id='file' ref={inputFile} onChange={onImageChange} style={{ display: 'none' }} accept="image/* video/*" multiple="false" />
+                      <Button  variant="none">
                       <img src={imageAttachment} alt="" onClick={uploadFile} />
+                      </Button>
                     </li>
                   </ul>
-                </span>}
-            </IconButton>
+                </span>
+                </Fade>}
+        
           </div>
           <div onMouseEnter={() => setEmojis(true)}
             onMouseLeave={() => setEmojis(false)}>
@@ -168,9 +167,9 @@ function Chat() {
                     skinTone={SKIN_TONE_MEDIUM_DARK} />
                 </span>}
             </div>
-            <IconButton>
-              <SentimentSatisfiedOutlinedIcon />
-            </IconButton>
+            <Button size='sm' variant="outline-secondary"> 
+               <BsEmojiSmileUpsideDown size="1.5em" />
+            </Button>
           </div>
         </div>
 				<form>
@@ -182,10 +181,14 @@ function Chat() {
           />
           <button onClick={sendMessage} ref={attachmentSubmitRef} type="submit" />
         </form>
-        <MicRoundedIcon onClick={() => setShowRecord(true)} />
+        <Button size='sm' onClick={() => setShowRecord(true)} variant="outline-secondary"> 
+               <BsMic size="1.5em" />
+        </Button> 
 					</>) 
 					:
-					(<RecordPopUp setRecord={setRecord} setRecordMenu={setShowRecord} />)}
+					(<div>
+            <RecordPopUp setRecord={setRecord} setRecordMenu={setShowRecord} />
+            </div>)}
         {console.log(record)}
       </div>
     </div>

@@ -15,12 +15,13 @@
 }
 
 .login__container{
+    transition: opacity 1s ease-in-out !important;
     display: flex;
     color: white;
     box-shadow: -1px 15px 10px -6px rgba(0, 0, 0, 0.75);
     background-color: #3f3f40;
     border-radius: 8px;
-    padding: 20px;
+    padding: 10px;
     min-width: 784px;
     max-width: 784px;
     min-height: 350px;
@@ -35,11 +36,6 @@
     left: 7%;
 }
 
-.login__formFooter > h3 {
-    font-weight: 600;
-    font-size: 20px;
-    margin: 7px 10px 0px 10px;
-  }
 
 .login__formFooter > h4 {
     max-width: 240px;
@@ -95,7 +91,6 @@
 
 .login__formHeader > h4 {
     position:relative;
-    top: 0px;
     text-align: center;
     width: auto;
     font-size: 16px;
@@ -112,17 +107,19 @@
 
 .login__formBody{
     flex: 0.4;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .login__formBodyEmail{
     position: relative;
     bottom: 40%;
+    margin-bottom: 20px;
 }
 
 .login__formBodyPassword{
     position: relative;
     bottom: 30%;
+    margin-bottom: 20px;
 }
 
 label {
@@ -131,6 +128,7 @@ label {
     color: rgb(185, 187, 190);
     font-size: 11px;
     font-weight: 700;
+    margin-bottom: 8px;
   }
 
 .attention {
@@ -147,10 +145,17 @@ input {
     outline: none;
   }
 
+.field{
+    position: relative;
+    bottom: 10%;
+    margin-bottom: 17px;
+}
+
 .login__formFooter{
     flex:0.2;
     position: relative;
-    margin-top: 30px;
+    margin-top: 50px;
+    top: 15px;
 }
 
 

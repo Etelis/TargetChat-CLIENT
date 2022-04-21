@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import "./Login.css";
-import { Button, IconButton } from "@material-ui/core";
 // import { auth, provider } from './firebase';
 // import { signInWithPopup } from "firebase/auth";
 import { useStateValue } from './StateProvider';
 import { actionTypes } from '../controller/userDBController';
 import QR from "../images/qr.png";
-import GoogleIcon from '@mui/icons-material/Google';
 import { Link } from "react-router-dom";
 import { getUser } from '../controller/userDBController';
+import { Button, Fade } from 'react-bootstrap'
 
 function Login() {
-		const inputInitialState = {userName: '', password: ''};
+	const inputInitialState = {userName: '', password: ''};
     const [state, dispatch] = useStateValue();
     const [formValues, setFormValues] = useState(inputInitialState);
   	const [formErrors, setFormErrors] = useState({});
-	  const [isSubmit, setIsSubmit] = useState(false);
+	const [isSubmit, setIsSubmit] = useState(false);
 
 		const handleChange = (e) => {
 			const {name, value} = e.target;
@@ -72,12 +71,14 @@ function Login() {
   return (
       
     <div className='login'>
+        <Fade in={true} appear={true} >
         <div className='login__container'>
             <div className='login__form'>
                 <div className='login__formHeader'>
                     <h3>Welcome back!</h3>
                     <h4>We're so excited to see you again!</h4>
                 </div>
+                <form>
                 <div className='login__formBody'>
                     <div className='login__formBodyEmail'>
 											  <label htmlFor="ephone" className={formErrors.userName && 'attention'}>USERNAME{formErrors.userName} </label>
@@ -91,10 +92,11 @@ function Login() {
                     </div>
                 </div>
                 <div className='login__formFooter'>
-                    <Button variant="contained" className='button' color='primary' onClick={handleSubmit} type="submit">
+                    <Button variant="primary" className='button' color='primary' onClick={handleSubmit} type="submit">
                         Login
-                    </Button>
+                    </Button >
                 </div>
+                </form>
                 <div className='toSignUp__container'>
                       <div className='toSignUp'>
                           Need an account?
@@ -120,6 +122,7 @@ function Login() {
 							
             </div>
         </div>
+        </Fade>
     </div>
   );
 }

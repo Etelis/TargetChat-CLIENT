@@ -16,7 +16,7 @@
 }
 
 .register__container{
-  
+    transition: opacity 1s ease-in-out !important;
     display: flex;
     color: white;
     box-shadow: -1px 15px 10px -6px rgba(0, 0, 0, 0.75);
@@ -41,7 +41,7 @@
 .register__formHeader{
     position: relative;
     flex: 1;
-    top: -5px;
+    margin-bottom: 10px;
     text-align: center;
     
 }
@@ -59,14 +59,13 @@
 .register__formHeader > h3 {
     font-size: 28px;
     font-weight: 900;
-    height: 10vh
   }
 
 
 .field{
     position: relative;
     bottom: 10%;
-    margin-bottom: 17px;
+    margin-bottom: 12px;
 }
 
 label {
@@ -90,7 +89,7 @@ input {
 .register__formFooter{
     flex:0.1;
     position: relative;
-    bottom: 5%;
+    margin-top: px;
 }
 .register__formFooter > .button{
     width: 100%;
@@ -101,6 +100,7 @@ input {
     border-radius: 5px;
     color: #FFF;
     height: 40px;
+    margin-top: 12px;
 }
 
 

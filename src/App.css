@@ -7,6 +7,7 @@
 }
 
 .app_body {
+  transition: opacity 1s ease-in-out !important;
   opacity: 0.98;
   position: relative;
   top: 20px;

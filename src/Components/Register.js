@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import "./Register.css";
-import { Button} from "@material-ui/core";
+import { Button, Fade} from "react-bootstrap";
 import { useStateValue } from './StateProvider';
-import { actionTypes , dispatch} from '../controller/userDBController';
+import { actionTypes } from '../controller/userDBController';
 import { Link } from "react-router-dom";
 
 function Register() {
@@ -73,11 +73,13 @@ function Register() {
   
   return (
     <div className='register'>
+        <Fade in={true} appear={true}>
         <div className='register__container'>
             <div className='register__form'>
                 <div className='register__formHeader'>
                     <h3>Create an account</h3>
                 </div>
+                <form>
                 <div className='register__formBody'>
                     <div className='field'>
                         <label htmlFor="userName" className={formErrors.userName && "attention"}>USERNAME{formErrors.userName}</label>
@@ -106,10 +108,11 @@ function Register() {
                 </div>
 							
                 <div className='register__formFooter'>
-                    <Button variant="contained" className='button' color='primary' onClick={handleSubmit}>
+                    <Button variant="primary" className='button' color='primary' type='sub' onClick={handleSubmit}>
                         Register
                     </Button>
                 </div>
+                </form>
                 <div className='toSignIn__container'>
                     <div className='toSignIn'>
                         Already have an account?
@@ -123,6 +126,7 @@ function Register() {
                 </div>
             </div>
         </div>
+        </Fade>
     </div>
   )
 }
