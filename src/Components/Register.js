@@ -6,11 +6,14 @@ import { actionTypes } from '../controller/userDBController';
 import { Link } from "react-router-dom";
 
 function Register() {
-  
   const [state, dispatch] = useStateValue();
+  // inital values for the registration form
   const initialValues = {userName: "", password: "", verify_password: "", displayname: "", photo: null};
+  // state for the form values
   const [formValues, setFormValues] = useState(initialValues);
+  // state for the form errors
   const [formErrors, setFormErrors] = useState({});
+  // state of the submit status of the form
   const [isSubmit, setIsSubmit] = useState(false);
 
 	// This function handles changing of the current photo.
@@ -33,7 +36,7 @@ function Register() {
         setIsSubmit(true);
     }
 
-	// validator.
+	// validator
     const validate = (values) => {
         const errors = {};
         const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -60,6 +63,7 @@ function Register() {
     }
   
     useEffect(() => {
+      // if no errors and the form was submitted
         if(Object.keys(formErrors).length === 0 && isSubmit) {
             dispatch({
             type: actionTypes.SET_ACCOUNT,

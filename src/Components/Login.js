@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import "./Login.css";
-// import { auth, provider } from './firebase';
-// import { signInWithPopup } from "firebase/auth";
 import { useStateValue } from './StateProvider';
 import { actionTypes } from '../controller/userDBController';
 import QR from "../images/qr.png";
@@ -10,34 +8,37 @@ import { getUser } from '../controller/userDBController';
 import { Button, Fade } from 'react-bootstrap'
 
 function Login() {
+  // initial input for the username and password fields
 	const inputInitialState = {userName: '', password: ''};
-    const [state, dispatch] = useStateValue();
-    const [formValues, setFormValues] = useState(inputInitialState);
-  	const [formErrors, setFormErrors] = useState({});
+  const [state, dispatch] = useStateValue();
+  // state for the initial form values
+  const [formValues, setFormValues] = useState(inputInitialState);
+  // state for the form errors
+	const [formErrors, setFormErrors] = useState({});
+  // state of the submit status of the form
 	const [isSubmit, setIsSubmit] = useState(false);
 
-		const handleChange = (e) => {
-			const {name, value} = e.target;
-			setFormValues({...formValues, [name]: value});
+  
+	const handleChange = (e) => {
+		const {name, value} = e.target;
+    setFormValues({...formValues, [name]: value});
 		};
 
-    const validate = (values) => {
-        const errors = {};
-        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-			
-        if(!values.userName) {
-            errors.userName = " - this field is required!"
-        }
-			
-			  if(!regex.test(values.password)) {
-            errors.password = " - password does not meet the password requirements"
-        }
-			
-        if(!values.password) {
-            errors.password = " - this field is required!"
-        }
-        return errors;
+  // validator
+  const validate = (values) => {
+     const errors = {};
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;		
+    if(!values.userName) {  
+      errors.userName = " - this field is required!"
+    }		
+	  if(!regex.test(values.password)) {
+      errors.password = " - password does not meet the password requirements"
+    }	
+    if(!values.password) {
+        errors.password = " - this field is required!"
     }
+      return errors;
+  }
 
 	  const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,16 +58,6 @@ function Login() {
             setFormErrors({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" });
         }
     }, [formErrors]);
-
-	
-    // const signInGoogle = () => {
-    //     signInWithPopup(auth, provider)
-    //     .then((result) => { dispatch({
-    //         type: actionTypes.SET_USER,
-    //         user: result.user,
-    //     })} )
-    //     .catch((error) => { alert(error.message)} );
-    // };
 
   return (
       

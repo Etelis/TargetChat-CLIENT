@@ -11,9 +11,10 @@ import ImageMessage from './MediaComponents/ImageMessage';
 import VideoMessage from './MediaComponents/VideoMessage';
 import Avatar from './MediaComponents/Avatar';
 import { BsPaperclip, BsEmojiSmileUpsideDown, BsMic} from "react-icons/bs";
-import { Button, Collapse, Fade } from 'react-bootstrap';
+import { Button, Fade } from 'react-bootstrap';
 
 function Chat() {
+  // state for the submit of a message
   const [isSubmited, setIsSubmited] = useState(false);
   const attachmentSubmitRef = useRef(null);
   const inputFile = useRef(null);
@@ -23,13 +24,19 @@ function Chat() {
   const [roomPic, setRoomPic] = useState(null);
   const [roomName, setRoomName] = useState('');
   const [messages, setMessages] = useState([]);
+  // state for the emojis menu
   const [emojis, setEmojis] = useState(false);
+  // state for the attachment menu
   const [showAttachMenu, setAttachMenu] = useState(false);
   const messageEndRef = useRef(null);
-  const [popUp, setPopUp] = useState("");
+  // a state for the image modal for displaying images and videos
+  const [imageModal, setImageModal] = useState("");
+  // state for the record submit
   const [record, setRecord] = useState("");
+  // state for the record button, is set to true after the record button is clicked
   const [showRecord, setShowRecord] = useState(false);
-  
+
+  /* adjusts the chat (chats, name, profile pic) according to the current user */
   useEffect(() => {
     if (roomId) {
       setMessages(state.chats.find((e) => {
@@ -115,7 +122,7 @@ function Chat() {
 
   return (
     <div className="chat">
-      { popUp != "" && <PopUpDisplay handleClick={()=> setPopUp("")} source={popUp} />}
+      { imageModal != "" && <PopUpDisplay handleClick={()=> setImageModal("")} source={imageModal} />}
       <div className="chat__header">
         <div className='chat__headerIcon'>
           <Avatar src={roomPic} />

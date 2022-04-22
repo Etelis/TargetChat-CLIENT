@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Sidebar from './Components/Sidebar';
 import Chat from './Components/Chat';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -11,7 +11,7 @@ import { Fade } from 'react-bootstrap';
 
 
 function App() {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
 
   return (
     <Router>
