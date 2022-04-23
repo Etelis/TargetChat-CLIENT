@@ -3,7 +3,9 @@ import React, {useState} from 'react'
 import './Avatar.css';
 import PopUpDisplay from './PopUpDisplay';
 
+// avatar component.
 function Avatar({src}) {
+  // useState for showing avatar in modal state.
   const [popUp, setPopUp] = useState("");
 
 

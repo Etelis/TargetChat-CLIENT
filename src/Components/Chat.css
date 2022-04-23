@@ -63,10 +63,9 @@ color: white;
 }
 
 .chat__message{
-
   color: white;
   box-shadow: 0px 2px 10px #000000;
-  font-size: 16px;
+  font-size: 15px;
   position: relative;
   background-color: #212121;
   border-radius: 15px;
@@ -152,18 +151,17 @@ color: white;
 }
 
 .attachmentMenu{
+
+}
+.attachmentMenu > ul{
   transition: opacity 1s ease-in-out !important;
 	position: absolute;
-	bottom: 40px;
+  bottom: 5%;
   left: 19%;
-  padding-right: 14px;
-	box-sizing: initial;
+  padding-right: 25px;
 	width: 50px;
 	pointer-events: all;
 	transform: translateX(-45%);
-}
-.attachmentMenu > ul{
-  list-style-type: none;
 }
 
 .attachmentMenu > .attachmentMenu__item {

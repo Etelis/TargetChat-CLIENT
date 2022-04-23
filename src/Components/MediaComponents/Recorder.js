@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// useRecorder, was copied from google. used as a Hook.
 const useRecorder = () => {
   const [audioURL, setAudioURL] = useState("");
   const [isRecording, setIsRecording] = useState(false);

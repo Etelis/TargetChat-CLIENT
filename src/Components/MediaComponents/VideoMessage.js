@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './VideoMessage.css';
 import PopUpDisplay from './PopUpDisplay';
 
+
+// video message component.
 function VideoMessage(props) {
   const [popUp, setPopUp] = useState("");
 

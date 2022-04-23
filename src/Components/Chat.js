@@ -16,13 +16,18 @@ import { Button, Fade } from 'react-bootstrap';
 function Chat() {
   // state for the submit of a message
   const [isSubmited, setIsSubmited] = useState(false);
+  // reference to the submit button
   const attachmentSubmitRef = useRef(null);
+  // reference to the input file button
   const inputFile = useRef(null);
   const [input, setInput] = useState('');
   const [state, dispatch] = useStateValue();
   const { roomId } = useParams();
+  // state for the room pic
   const [roomPic, setRoomPic] = useState(null);
+  // state for the room name
   const [roomName, setRoomName] = useState('');
+  // state for the messages
   const [messages, setMessages] = useState([]);
   // state for the emojis menu
   const [emojis, setEmojis] = useState(false);
@@ -36,7 +41,7 @@ function Chat() {
   // state for the record button, is set to true after the record button is clicked
   const [showRecord, setShowRecord] = useState(false);
 
-  /* adjusts the chat (chats, name, profile pic) according to the current user */
+  // adjusts the chat (messages, name, profile pic) 
   useEffect(() => {
     if (roomId) {
       setMessages(state.chats.find((e) => {
@@ -51,10 +56,12 @@ function Chat() {
     }
   }, [roomId, input]);
 
+  // scroll into view when new message is sent or entered chat.
   useEffect(() => {
     messageEndRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
   }, [messages, input]);
 
+  // submits the message and adds it to the chat's messages
   useEffect(() => {
     const time = new Date().getHours() + ':' + new Date().getMinutes();
     if (isSubmited && input != "") {
@@ -62,44 +69,48 @@ function Chat() {
       state.chats.find((e) => {
         return e.id == roomId
       }).messages.push(newMessage);
+      // render when message was appended.
 			dispatch({type: actionTypes.RENDER});
       setInput("");
     }
     setIsSubmited(false);
   }, [isSubmited]);
 
+  // sets the input to the new record input
   useEffect(() => {
     if(record != "") {
-    console.log(record);
     setInput(<audio src={record} controls />);
+    // click on submit.
     attachmentSubmitRef.current.click();
     setRecord("");
     }
   }, [record]);
-  
+
+  // sends a message
   const sendMessage = (e) => {
     e.preventDefault();
     setIsSubmited(true);
   };
 
+  // triggers the input file click
   const uploadFile = () => {
     inputFile.current.click();
   };
 
+  // on image/video change
   const onImageChange = (event) => {
-    if (validateFileIsImg(event.target.files[0].name)) {
-      setInput(<ImageMessage src={URL.createObjectURL(event.target.files[0])} />);
-       attachmentSubmitRef.current.click();
+   if (validateFileIsImg(event.target.files[0].name)) {
+     setInput(<ImageMessage src={URL.createObjectURL(event.target.files[0])} />);
+     attachmentSubmitRef.current.click();
+  } else if(validateFileIsVideo(event.target.files[0].name)) {
+    setInput(<VideoMessage src={URL.createObjectURL(event.target.files[0])} />);
+    attachmentSubmitRef.current.click();  
+  } else {
+      alert("Only videos or images are valid!");
+  }
+};
 
-    } else if(validateFileIsVideo(event.target.files[0].name)) {
-      setInput(<VideoMessage src={URL.createObjectURL(event.target.files[0])} />);
-      attachmentSubmitRef.current.click();
-       
-    } else {
-       alert("Only videos or images are valid!");
-    }
-  };
-
+  // validator for the image file
   function validateFileIsImg(fileName) {
     var idxDot = fileName.lastIndexOf(".") + 1;
     var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
@@ -110,6 +121,7 @@ function Chat() {
     }
   }
 
+  // validator for the video file
   function validateFileIsVideo(fileName) {
     var idxDot = fileName.lastIndexOf(".") + 1;
     var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
@@ -145,23 +157,23 @@ function Chat() {
 			{!showRecord ? 
 					(<>
 					<div className="chat__footerIcons">
-          <div onClick={() => setAttachMenu(!showAttachMenu)}>
+          <div className='attachmentMenu' onMouseEnter={() => setAttachMenu(!showAttachMenu)} 
+               onMouseLeave={() => setAttachMenu(!showAttachMenu)}>
+                 
              <Button size='sm' variant="outline-secondary"> 
                <BsPaperclip size="1.5em" />
             </Button>
             
             {showAttachMenu &&
               <Fade in={showAttachMenu}> 
-                <span className='attachmentMenu'>
                   <ul>  
                     <li className="attachmentMenu__item">
-                      <input type='file' id='file' ref={inputFile} onChange={onImageChange} style={{ display: 'none' }} accept="image/* video/*" multiple="false" />
+                      <input type='file' id='file' ref={inputFile} onChange={onImageChange} style={{ display: 'none' }} accept="image/*, video/*" multiple="false" />
                       <Button  variant="none">
                       <img src={imageAttachment} alt="" onClick={uploadFile} />
                       </Button>
                     </li>
                   </ul>
-                </span>
                 </Fade>}
         
           </div>
@@ -188,15 +200,14 @@ function Chat() {
           />
           <button onClick={sendMessage} ref={attachmentSubmitRef} type="submit" />
         </form>
-        <Button size='sm' onClick={() => setShowRecord(true)} variant="outline-secondary"> 
-               <BsMic size="1.5em" />
-        </Button> 
 					</>) 
 					:
 					(<div>
             <RecordPopUp setRecord={setRecord} setRecordMenu={setShowRecord} />
             </div>)}
-        {console.log(record)}
+          <Button size='sm' onClick={() => setShowRecord(!showRecord)} variant="outline-secondary"> 
+               <BsMic size="1.5em" />
+        </Button> 
       </div>
     </div>
   );

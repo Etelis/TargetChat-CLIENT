@@ -2,31 +2,35 @@ import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { actionTypes } from '../controller/userDBController';
 import { useStateValue } from './StateProvider';
-import DefaultProfilePic from '../images/Amit.png';
+import DefaultProfilePic from '../images/defaultIcon.svg';
 import './AddChatPrompt.css'
 
+// modal for showing new chat add.
 function AddChatPrompt(props) {
-    const [input, setInput] = useState("");
-    const [state, dispatch] = useStateValue();
+  // state for the input
+  const [input, setInput] = useState("");
+  const [state, dispatch] = useStateValue();
+  // handles the closing of the addChat popup
+  const handleClose = () =>  props.showAddChat(false);
 
-
-    const handleClose = () =>  props.showAddChat(false);
-
-    const handleSubmit = () => {
-        dispatch
+  // handles the submit 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(input !== "") {
+      dispatch
         ({
           type: actionTypes.ADD_CHATS,
           chats: [{id: state.chats.length + 1, name: input, profilePic: DefaultProfilePic, messages: []}]
         });
-
-        props.showAddChat(false);
+      props.showAddChat(false);
     }
+  }
 
     return (
         <>
-          <Modal show={true} centered={true} onHide={handleClose}>
+          <Modal show={true} onHide={handleClose}>
+          <Form>
             <Modal.Body>
-              <Form>
                 <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                   <div class="input-group mb-2 mr-sm-3">
                     <div class="input-group-prepend">
@@ -34,6 +38,7 @@ function AddChatPrompt(props) {
       
                     </div>
                     <Form.Control
+                        className="input"
                         type="username"
                         placeholder="Username"
                         autoFocus
@@ -47,16 +52,17 @@ function AddChatPrompt(props) {
                         Add your friend on TargetChat
                     </Form.Text>
                 </Form.Group>
-              </Form>
+              
             </Modal.Body>
             <Modal.Footer>
               <Button size="sm" variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button size="sm" variant="primary" onClick={handleSubmit}>
+              <Button size="sm" variant="primary" type="submit" onClick={handleSubmit}>
                 Add Friend
               </Button>
             </Modal.Footer>
+            </Form>
           </Modal>
         </>
       );

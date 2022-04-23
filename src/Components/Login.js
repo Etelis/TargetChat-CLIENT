@@ -18,7 +18,7 @@ function Login() {
   // state of the submit status of the form
 	const [isSubmit, setIsSubmit] = useState(false);
 
-  
+  // handles change on the input fields in the form
 	const handleChange = (e) => {
 		const {name, value} = e.target;
     setFormValues({...formValues, [name]: value});
@@ -26,7 +26,7 @@ function Login() {
 
   // validator
   const validate = (values) => {
-     const errors = {};
+    const errors = {};
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;		
     if(!values.userName) {  
       errors.userName = " - this field is required!"
@@ -40,24 +40,27 @@ function Login() {
       return errors;
   }
 
-	  const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmit(true);
-    }
+  // handles submit of the form
+	const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+   }
+
   
-	  useEffect(() => {
-			
-        if(Object.keys(formErrors).length === 0 && isSubmit) {
-          const foundUser = getUser(formValues.userName, formValues.password);
-					
-          if(foundUser){
-            dispatch({type: actionTypes.SET_USER, otherUser: foundUser});
-          }
-          else
-            setFormErrors({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" });
-        }
-    }, [formErrors]);
+	useEffect(() => {
+    // if no errors, and submit button was clicked check if user exists in DB and change current User to this user.
+    if(Object.keys(formErrors).length === 0 && isSubmit) {
+      const foundUser = getUser(formValues.userName, formValues.password)		
+      if(foundUser){
+        dispatch({type: actionTypes.SET_USER, otherUser: foundUser})
+      }
+      // if no user was found print error.
+      else {
+        setFormErrors({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" });
+      }
+    }
+  }, [formErrors]);
 
   return (
       

@@ -9,11 +9,16 @@ import { Button } from 'react-bootstrap';
 
 function Sidebar() {
 
+  // useState for all chats of current user.
   const [rooms, setRooms] = useState([]);
+  // useState for current user.
   const [state, dispatch] = useStateValue();
+  // useState for search input field.
 	const [searchInput,setSearchInput] = useState("");
+  // useState for showing add new chat modal.
 	const [addChat, showAddChat] = useState(false);
 
+  // handles search bar.
 	const searchHandle = (e) => {
 		setSearchInput(e.target.value);
 		setRooms(rooms.filter((element) => { return element.name.toLowerCase().includes(e.target.value.toLowerCase()) }));
