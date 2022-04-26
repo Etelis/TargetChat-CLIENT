@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+<div style="width:100%">
+    <div style="width:50%;">
+        <div align="center">
+        <img align="center" width="180" height="180" alt="CometChat" src="./Screenshots/logo.png">    
+        </div>    
+    </div>    
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br/><br/>
 
-## Available Scripts
 
-In the project directory, you can run:
+# Target Chat - Full Stack React ASP.NET SQL chat client and server application.
 
-### `npm start`
+<p align="left">
+    <a href="https://github.com/Etelis/TargetChat/releases/" alt="Releases">
+        <img src="https://img.shields.io/github/v/release/Etelis/TargetChat" />
+    </a>
+    <a href="https://img.shields.io/github/languages/top/cometchat-pro/cometchat-pro-react-sample-app">
+        <img src="https://img.shields.io/github/languages/top/Etelis/TargetChat" />
+    </a>
+    <a href="https://github.com/Etelis/TargetChat/stargazers">
+        <img src="https://img.shields.io/github/stars/Etelis/TargetChat?style=social" />
+    </a>
+</p/Etelis/TargetChat
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![alt text](./Screenshots/main.png "Main")
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Target Chat is an open-source team collaboration Real-Time Ready Chat App written with React, ASP.NET, & SQL Database.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
+- Login
+- Register
+- Private(1-1) conversations.
+- Rich Media Attachments including image, video and voice messages. 
+- Read receipts
+- Online Presence Indicators
+- Message History
+- Users & Friends List
+- Search by users
+- Conversations List
+- User management
+- Routing (React Router)
+- Real-time
+  
+ ## Technologies
+* [React](https://github.com/facebook/react)
+* [React-Bootstrap](https://react-bootstrap.github.io/)
+* [ASP.NET](https://dotnet.microsoft.com/en-us/apps/aspnet)
+* [React Router](https://reactrouter.com/docs/en/v6)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<hr/> 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Before git is imported, ensure you have met the specified requirements:
 
-### `npm run eject`
+- React `npm install react`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- React ROUTER-DOM `npm install react-router-dom`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React ROUTE `npm install react-router`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- React Scripts `npm install react-scripts`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- React Bootstrap `npm install react-bootstrap`
 
-## Learn More
+- Bootstrap `npm install bootstrap`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+___
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Installing Target Chat 
 
-### Code Splitting
+1. Clone repository using `git clone https://github.com/Etelis/TargetChat/`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. Install dependencies by following requirments section.
 
-### Analyzing the Bundle Size
+3. Create new react app from the following repository.
+___
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Running the Chat application.
 
-### Making a Progressive Web App
+```javascript
+  npm start
+```
+___
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Screens
 
-### Advanced Configuration
+Login Page:
+IMAGE
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Register Page:
+IMAGE
 
-### Deployment
+Main Chat:
+IMAGE
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+# Replit - Preview:
+You could check a full working application deployed to replit.
+* [Target Chat](https://targetchat-3.etelis.repl.co/) on replit.
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Components:
+  # Registration:
+     Registration component will allow registration of a new user, regisration form follows the following rules:
+    - username field: user name field should at least have a single letter.
+    - password field: password field should follow the following regex `/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/` - meaning a password should have at least one number and letter, also should be at least at the size of eight.
+    - image field - user should specify profile image.
+---
