@@ -10,7 +10,7 @@ import RecordPopUp from './MediaComponents/RecordPopUp';
 import ImageMessage from './MediaComponents/ImageMessage';
 import VideoMessage from './MediaComponents/VideoMessage';
 import Avatar from './MediaComponents/Avatar';
-import { BsPaperclip, BsEmojiSmileUpsideDown, BsMic} from "react-icons/bs";
+import { BsEmojiSmileUpsideDown, BsMic} from "react-icons/bs";
 import { Button, Fade } from 'react-bootstrap';
 
 function Chat() {
@@ -157,10 +157,11 @@ function Chat() {
 			{!showRecord ? 
 					(<>
 					<div className="chat__footerIcons">
-          <div className='attachmentMenu' onClick={() => setAttachMenu(!showAttachMenu)}  >
+          <div className='attachmentMenu' onMouseEnter={() => setAttachMenu(!showAttachMenu)} 
+               														onMouseLeave={() => setAttachMenu(!showAttachMenu)}>
                  
              <Button size='sm' variant="outline-secondary"> 
-               <BsPaperclip size="1.5em" />
+							<i class="bi bi-paperclip" />
             </Button>
             
             {showAttachMenu &&
@@ -186,7 +187,7 @@ function Chat() {
                 </span>}
             </div>
             <Button size='sm' variant="outline-secondary"> 
-               <BsEmojiSmileUpsideDown size="1.5em" />
+               <i class="bi bi-emoji-smile-upside-down" size="1.5em" />
             </Button>
           </div>
         </div>
@@ -205,7 +206,7 @@ function Chat() {
             <RecordPopUp setRecord={setRecord} setRecordMenu={setShowRecord} />
             </div>)}
           <Button size='sm' onClick={() => setShowRecord(!showRecord)} variant="outline-secondary"> 
-               <BsMic size="1.5em" />
+               <i class="bi bi-mic" size="1.5em" />
         </Button> 
       </div>
     </div>

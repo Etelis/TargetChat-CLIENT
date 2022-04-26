@@ -3,8 +3,6 @@ import Avatar from "./MediaComponents/Avatar";
 import "./SidebarChat.css";
 import { BsPlayCircle } from "react-icons/bs";
 
-
-
 function SidebarChat({ id, name, profilePic, lastMessage}) {
 
   // validate content of message, if audio print icon instead of bar.

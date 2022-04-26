@@ -156,7 +156,7 @@ color: white;
 .attachmentMenu > ul{
   transition: opacity 1s ease-in-out !important;
 	position: absolute;
-  bottom: 5%;
+  bottom: 4%;
   left: 19%;
   padding-right: 25px;
 	width: 50px;
@@ -170,7 +170,7 @@ color: white;
 }
 
 .attachmentMenu > ul > li:not(:last-child) { 
-  margin-bottom: 10px;  
+  margin-bottom: 5px;  
 }
 
 #player{

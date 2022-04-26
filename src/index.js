@@ -7,6 +7,7 @@ import { currentUser } from './model/UserDB';
 import { StateProvider } from './Components/StateProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <StateProvider initialState={currentUser} reducer={currentUserSetter}>

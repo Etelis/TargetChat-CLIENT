@@ -4,7 +4,6 @@ import SidebarChat from "./SidebarChat";
 import { useStateValue } from './StateProvider';
 import AddChatPrompt from './AddChatPrompt';
 import Avatar from './MediaComponents/Avatar';
-import { BsFillPersonPlusFill, BsThreeDotsVertical, BsSearch } from "react-icons/bs";
 import { Button } from 'react-bootstrap';
 
 function Sidebar() {
@@ -41,14 +40,18 @@ function Sidebar() {
       <div className="sidebar__header">
         <Avatar src={state.profilePic} />
         <div className="sidebar__headerRight">
-          <Button size='sm' onClick={(e) => {showAddChat(true);}} variant="outline-light"> <BsFillPersonPlusFill size="1em" /> </Button>
-          <Button size='sm' variant="outline-light"> <BsThreeDotsVertical /> </Button>
+          <Button size='sm' onClick={(e) => {showAddChat(true);}} variant="outline-light"> 
+						<i class="bi bi-person-plus-fill" size="1em" />
+					</Button>
+          <Button size='sm' variant="outline-light">
+						<i class="bi bi-three-dots-vertical" /> 
+					</Button>
         </div>
       </div>
 
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
-        <BsSearch className='icon' />
+        <i class="bi bi-search" className='icon' />
         <input placeholder="Search or start a new chat" type="text" value={searchInput} onChange={searchHandle}/>
         </div>
       </div>

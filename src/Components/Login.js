@@ -112,7 +112,9 @@ function Login() {
                 </h4>
 
                 <h4 className='boldDescription'> <span className="boldDescription"> Or Signing With: </span> </h4>
-        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-emoji-smile-upside-down"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-sm">
+					<i class="bi bi-google"></i>
+				</button>
 							
             </div>
         </div>
