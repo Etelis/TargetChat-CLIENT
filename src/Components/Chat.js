@@ -157,8 +157,7 @@ function Chat() {
 			{!showRecord ? 
 					(<>
 					<div className="chat__footerIcons">
-          <div className='attachmentMenu' onMouseEnter={() => setAttachMenu(!showAttachMenu)} 
-               onMouseLeave={() => setAttachMenu(!showAttachMenu)}>
+          <div className='attachmentMenu' onClick={() => setAttachMenu(!showAttachMenu)}  >
                  
              <Button size='sm' variant="outline-secondary"> 
                <BsPaperclip size="1.5em" />
