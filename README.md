@@ -1,7 +1,7 @@
 <div style="width:100%">
     <div style="width:50%;">
         <div align="center">
-        <img align="center" width="180" height="180" alt="CometChat" src="./Screenshots/logo.png">    
+        <img align="center" width="180" height="180" alt="Target Chat" src="https://user-images.githubusercontent.com/92247226/165357228-cf5dc2d3-25f6-467a-bc58-bc3589916d16.png">    
         </div>    
     </div>    
 </div>
@@ -22,8 +22,6 @@
         <img src="https://img.shields.io/github/stars/Etelis/TargetChat?style=social" />
     </a>
 </p/Etelis/TargetChat
-
-![alt text](./Screenshots/main.png "Main")
 
 Target Chat is an open-source team collaboration Real-Time Ready Chat App written with React, ASP.NET, & SQL Database.
 
