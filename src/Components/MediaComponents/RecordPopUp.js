@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { render } from "react-dom";
 import useRecorder from "./Recorder";
 import sendAudio from '../../images/sendAudio.svg'
 import recordAudio from '../../images/RecordAudio.svg'
@@ -7,7 +6,6 @@ import trash from '../../images/trash.svg'
 import pause from '../../images/pause.svg'
 import './RecorderPopUp.css'
 import { Button } from 'react-bootstrap';
-import {BsMic} from "react-icons/bs";
 
 
 // recorder pop up, logic of recording buttons and bar.
@@ -20,22 +18,18 @@ function RecordPopUp({setRecord, setRecordMenu}) {
 	const handleClick = (e) => {
 		switch(e.target.name) {
 			case "RECORD":
-        console.log("r");
 				startRecording();
 				setShowButtons({...showButtons, showRecord: false, showPause: true});
 				break;
 			case "PAUSE":
-        console.log("p");
 				setShowButtons({...showButtons, showPause: false, showBin: true, showSend: true});
 				stopRecording();
 				break;
 			case "SEND":
-        console.log("s");
 				stopRecording();
 				setSubmitAudio(true);
 				break;
 			case "TRASH":
-        console.log("t");
 				stopRecording();
 				setShowButtons({...showButtons, showRecord: true, showBin: false, showSend: false});
 				break;

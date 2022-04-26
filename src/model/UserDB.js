@@ -4,7 +4,9 @@ import orelProfilePic from "../images/Orel.png";
 import itayProfilePic from "../images/Itay.png";
 import emptyUser from "../images/emptyUser.png";
 import ImageMessage from "../Components/MediaComponents/ImageMessage";
+import audio from "../images/Kalimba.mp3"
 
+//<audio src={record} controls />
 const sampleRooms = 
 [
   {
@@ -16,7 +18,8 @@ const sampleRooms =
             { name: "Orel", timestamp: "12:48", content: "Hey Maayan. did u do the recent assigment given?", reciver: true }
       ,
             { name: "Maayan", timestamp: "12:50", content: "Yes sure! here you go:", reciver: false }
-            ]
+      ,
+            { name: "Maayan", timestamp: "12:53", content: <audio src={audio} controls />, reciver: true }]
   },
   {
     id: 2,
