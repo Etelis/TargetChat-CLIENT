@@ -27,6 +27,16 @@
 
 Target Chat is an open-source team collaboration Real-Time Ready Chat App written with React, ASP.NET, & SQL Database.
 
+# Replit - Preview:
+You could check a full working application deployed to replit.
+* [Target Chat](https://targetchat-3.etelis.repl.co/) on replit.
+* Default username: Maayan
+* Default password: Maayan12345
+---
+
+## Stage of development:
+- Currently the project is in development state so far a full react client is functional
+- APS.NET api and SQL DB will be added 
 
 ## Features
 - Login
@@ -100,11 +110,6 @@ Main Chat:
 
 ---
 
-# Replit - Preview:
-You could check a full working application deployed to replit.
-* [Target Chat](https://targetchat-3.etelis.repl.co/) on replit.
----
-
 ## Components:
  ## Registration:
  Registration component will allow registration of a new user, regisration form follows the following rules:
@@ -133,5 +138,10 @@ You could check a full working application deployed to replit.
   ## Media Items:
   media items as Images and videos will be warrped inside a coresponding component allowing on click full screen view
   ![image](https://user-images.githubusercontent.com/92247226/165355800-a4806eca-c4b9-4116-bce2-5d79ca9dfd98.png)
+
+  ## Chat Recipient:
+  adding a new chat receipinct is done by a modal component allowing a user to add new receipient for incomming and out going conversations.
+  ![image](https://user-images.githubusercontent.com/92247226/165356113-467b2a86-8ee9-4332-8ec7-fd42356245b1.png)
+
 
 ---
