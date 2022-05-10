@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@microsoft/signalr": "^6.0.4",
     "bootstrap": "^5.1.3",
     "bootstrap-icons": "^1.8.1",
     "emoji-picker-react": "^3.5.1",
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.3",
+    "react-content-loader": "^6.2.0",
     "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
     "react-scripts": "^5.0.1"
   },

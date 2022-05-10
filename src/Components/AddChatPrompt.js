@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { actionTypes } from '../controller/userDBController';
+import { createNewContactDB } from '../Controllers/ContactsDBController';
 import { useStateValue } from './StateProvider';
 import DefaultProfilePic from '../images/defaultIcon.svg';
 import './AddChatPrompt.css'
@@ -8,7 +8,7 @@ import './AddChatPrompt.css'
 // modal for showing new chat add.
 function AddChatPrompt(props) {
   // state for the input
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState({contactID: "", contactName: "", server: ""});
   const [state, dispatch] = useStateValue();
   // handles the closing of the addChat popup
   const handleClose = () =>  props.showAddChat(false);
@@ -16,13 +16,12 @@ function AddChatPrompt(props) {
   // handles the submit 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(input !== "") {
-      dispatch
-        ({
-          type: actionTypes.ADD_CHATS,
-          chats: [{id: state.chats.length + 1, name: input, profilePic: DefaultProfilePic, messages: []}]
-        });
-      props.showAddChat(false);
+    if(input.contactID !== "" && input.server !== "") {
+      async function fetchData(){
+        if(await createNewContactDB(state.username, input.contactID, input.contactName, input.server))
+          props.showAddChat(false);
+      }
+      fetchData()
     }
   }
 
@@ -42,8 +41,36 @@ function AddChatPrompt(props) {
                         type="username"
                         placeholder="Username"
                         autoFocus
-                        value={input}
-                        onChange={(e) => {setInput(e.target.value)}}
+                        value={input.contactID}
+                        onChange={(e) => {setInput({...input, contactID: e.target.value})}}
+                    />
+                 </div>
+                 <div class="input-group mb-2 mr-sm-3">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">➤</div>
+      
+                    </div>
+                    <Form.Control
+                        className="input"
+                        type="username"
+                        placeholder="Contact Name"
+                        autoFocus
+                        value={input.contactName}
+                        onChange={(e) => {setInput({...input, contactName: e.target.value})}}
+                    />
+                 </div>
+                 <div class="input-group mb-2 mr-sm-3">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">➤</div>
+      
+                    </div>
+                    <Form.Control
+                        className="input"
+                        type="username"
+                        placeholder="Server"
+                        autoFocus
+                        value={input.server}
+                        onChange={(e) => {setInput({...input, server: e.target.value})}}
                     />
                  </div>
                 </Form.Group>

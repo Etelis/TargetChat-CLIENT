@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import "./Register.css";
 import { Button, Fade} from "react-bootstrap";
 import { useStateValue } from './StateProvider';
-import { actionTypes } from '../controller/userDBController';
+import { createUserDB } from '../Controllers/UsersDBController';
+import { actionTypes } from '../Utils/Constants';
 import { Link } from "react-router-dom";
 
 function Register() {
@@ -65,14 +66,29 @@ function Register() {
     useEffect(() => {
       // if no errors and the form was submitted
         if(Object.keys(formErrors).length === 0 && isSubmit) {
-            dispatch({
-            type: actionTypes.SET_ACCOUNT,
-            user: formValues.userName,
-						password: formValues.password,
-						displayName: formValues.displayname,
-						profilePic: formValues.photo,
-						});
+            async function fetchData(){
+            const newUser = 
+            {
+                username: formValues.userName,
+                password: formValues.password,
+                displayName: formValues.displayname,
+                photo: formValues.photo,
+            }
+            
+            if (await createUserDB(newUser))
+            {
+                dispatch(
+                    {
+                    type: actionTypes.SET_USER,
+                    user: newUser
+                    })
+            }
+            else{
+                setFormErrors({userName: " - User already exists!" });
+            }
         }
+        fetchData()
+    }
     }, [formErrors]);
   
   return (

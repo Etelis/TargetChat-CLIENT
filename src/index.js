@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { currentUserSetter } from './controller/userDBController';
+import { currentUserSetter } from './Controllers/UsersDBController';
 import { currentUser } from './model/UserDB';
 import { StateProvider } from './Components/StateProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';

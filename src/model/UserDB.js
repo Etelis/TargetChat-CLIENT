@@ -76,6 +76,5 @@ const sampleRooms =
 ]
 
 
-export const usersDB = [ {user: "Maayan", displayName: "Maayan", password: "Maayan12345", profilePic: amitProfilePic, chats: sampleRooms } ]
-export const currentUser = { user: null, displayName: null, password: null, profilePic: emptyUser, chats: [] };
+export const currentUser = { username: null, displayName: null, password: null, profilePic: emptyUser};
 

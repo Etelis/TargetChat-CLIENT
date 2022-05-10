@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import "./Login.css";
 import { useStateValue } from './StateProvider';
-import { actionTypes } from '../controller/userDBController';
 import QR from "../images/qr.png";
 import { Link } from "react-router-dom";
-import { getUser } from '../controller/userDBController';
+import { fetchUserFromDB } from '../Controllers/UsersDBController';
 import { Button, Fade } from 'react-bootstrap'
+import { actionTypes } from '../Utils/Constants'
+
 
 function Login() {
   // initial input for the username and password fields
@@ -51,15 +52,19 @@ function Login() {
 	useEffect(() => {
     // if no errors, and submit button was clicked check if user exists in DB and change current User to this user.
     if(Object.keys(formErrors).length === 0 && isSubmit) {
-      const foundUser = getUser(formValues.userName, formValues.password)		
-      if(foundUser){
-        dispatch({type: actionTypes.SET_USER, otherUser: foundUser})
+      async function fetchData(){
+        const foundUser = await fetchUserFromDB(formValues.userName, formValues.password)
+        console.log(foundUser)
+        if(foundUser){
+          dispatch({type: actionTypes.SET_USER, otherUser: foundUser})
+        }
+        // if no user was found print error.
+        else {
+          setFormErrors({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" });
+        }
       }
-      // if no user was found print error.
-      else {
-        setFormErrors({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" });
-      }
-    }
+      fetchData();
+  }
   }, [formErrors]);
 
   return (
