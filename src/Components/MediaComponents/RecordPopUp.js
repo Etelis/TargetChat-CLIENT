@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import useRecorder from "./Recorder";
 import sendAudio from '../../images/sendAudio.svg'
 import recordAudio from '../../images/RecordAudio.svg'

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {Modal, Button, Image} from 'react-bootstrap';
+
+import {Modal} from 'react-bootstrap';
 import './PopUpDisplay.css';
 
 // popUp Display component, in charge of showing large image modal.

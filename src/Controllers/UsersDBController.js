@@ -1,7 +1,5 @@
-import { useStateValue } from '../Components/StateProvider';
-import { usersDB, currentUser } from '../model/UserDB';
 import constants, { actionTypes } from '../Utils/Constants';
-import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
+
 
 
 export const logout = () => {
@@ -72,12 +70,24 @@ export const createUserDB = async (user) => {
 export const currentUserSetter = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_USER:
-      return action.otherUser;
+      return {...action.otherUser, contactConnection: "", chatConnection: ""}
 
 		case actionTypes.RENDER:
       return {
 				...state,
 			}
+
+    case actionTypes.SET_CHAT_CONNECTION:
+      return {
+        ...state,
+        chatConnection: action.chatConnection,
+      }
+
+    case actionTypes.SET_CONTACT_CONNECTION:
+        return {
+          ...state,
+          contactConnection: action.contactConnection,
+        }
 
     default:
       return state;
