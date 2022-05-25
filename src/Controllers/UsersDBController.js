@@ -18,8 +18,8 @@ export const AuthenticateByToken = async () =>{
 
   await fetch(constants().API_URL_AUTHENTICATE_USER, requestOptions)
         .then(response => response.json())
-        .then(jsonResponse => {returnVal = jsonResponse})
-        .catch((error) => {returnVal = null})
+        .then(jsonResponse => returnVal = jsonResponse)
+        .catch(error => returnVal = null)
 
   console.log(returnVal)
 
@@ -45,7 +45,7 @@ export const fetchUserFromDB = async (userName, password) =>
       localStorage.setItem('jwt_token', jsonResponse.token);
     })
     .catch((error) => {returnVal = null;})
-
+    console.log(returnVal)
   return returnVal
 };
 
@@ -62,7 +62,8 @@ export const createUserDB = async (user) => {
           if (response.ok)
             returnVal = true
         })
-        .catch((error) => {returnVal = false});
+        .catch(error => returnVal = false);
+  console.log(returnVal)
   return returnVal
 }
 
