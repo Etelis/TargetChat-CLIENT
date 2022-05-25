@@ -1,4 +1,6 @@
-const API_BASE_URL_DEVELOPMENT = 'https://localhost:7180/api'
+import emptyUser from "../images/emptyUser.png";
+
+const API_BASE_URL_DEVELOPMENT = 'https://localhost:7129/api'
 const API_BASE_URL_PRODUCTION = 'https://azure:7180/api'
 
 
@@ -16,7 +18,10 @@ const ENDPOINTS = (messageID=null, contactID=null) => ({
     CREATE_MESSAGE_BY_CONTACT: `contacts/${contactID}/messages`,
 
     TRANSFER_MESSAGE: `transfer`,
-    INVITE_MEMBER: `invite`
+    INVITE_MEMBER: `invite`,
+
+    CHAT_CONNECTION: 'chat_connect',
+    CONTACT_CONNECTION: 'contact_connect',
 })
 
 const development = (contactID=null, messageID=null, contactServer=null) => ({
@@ -34,6 +39,9 @@ const development = (contactID=null, messageID=null, contactServer=null) => ({
 
     API_URL_TRANSFER_MESSAGE: `https://${contactServer}/api/${ENDPOINTS().TRANSFER_MESSAGE}`,
     API_URL_INVITE_MEMBER: `https://${contactServer}/api/${ENDPOINTS().INVITE_MEMBER}`,
+
+    API_URL_CHAT_CONNECTION: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS().CHAT_CONNECTION}`,
+    API_URL_CONTACT_CONNECTION: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS().CONTACT_CONNECTION}`,
 })
 
 const production = (messageID=null, contactID=null, contactServer=null) => ({
@@ -51,15 +59,21 @@ const production = (messageID=null, contactID=null, contactServer=null) => ({
 
     API_URL_TRANSFER_MESSAGE: `${contactServer}/${ENDPOINTS().TRANSFER_MESSAGE}`,
     API_URL_INVITE_MEMBER: `${contactServer}/${ENDPOINTS().INVITE_MEMBER}`,
+
+    API_URL_CHAT_CONNECTION: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS().CHAT_CONNECTION}`,
+    API_URL_CONTACT_CONNECTION: `${API_BASE_URL_DEVELOPMENT}/${ENDPOINTS().CONTACT_CONNECTION}`,
 })
 
 const constants = process.env.NODE_ENV === 'development' ? development : production;
 
+export const nullUser = { username: null, displayName: null, password: null, profilePic: emptyUser};
+
+
 export const actionTypes = {
     SET_USER: "SET_USER",
-    SET_ACCOUNT: "SET_ACCOUNT",
-    ADD_CHATS: "ADD_CHATS",
-      RENDER: "RENDER",
+    RENDER: "RENDER",
+    SET_CHAT_CONNECTION: "SET_CHAT_CONNECTION",
+    SET_CONTACT_CONNECTION: "SET_CONTACT_CONNECTION",
   };
 
 export default constants
