@@ -1,6 +1,22 @@
 import constants, {actionTypes} from '../Utils/Constants';
 import { HubConnectionBuilder} from '@microsoft/signalr';
 
+const isAvailable = (server) => {
+  const timeout = new Promise((resolve, reject) => {
+      setTimeout(reject, 300, 'Request timed out');
+  });
+
+  const request = fetch(server);
+
+  return Promise
+      .race([timeout, request])
+      .then(function() {
+        return true;
+      })
+      .catch(function() {
+        return false;
+      });
+}
 
 export const transferMessageRemote = async (userID, contactID, content, contactServer) => {
   let returnVal = false
@@ -52,24 +68,22 @@ export const createNewMessageDB = async (userID, contactID, content, contactServ
       "content": content
       })};
 
+    if (!await isAvailable(constants(contactID, null, null).API_URL_CREATE_MESSAGE_BY_CONTACT)){
+      return;
+    }
+    
+    if(!await transferMessageRemote(userID, contactID, content, contactServer)){
+      return
+    }      
+
   await fetch(constants(contactID, null, null).API_URL_CREATE_MESSAGE_BY_CONTACT, requestOptions)
-        .then(async response => {
-          if (response.ok){
-            if (await transferMessageRemote(userID, contactID, content, contactServer) == null ){
-              console.log("error")
-              throw new Error('Failed transfring message')
-            }
-            returnVal = true
-          }
-        })
+        .then(async response => returnVal = true)
         .catch((error) => {returnVal = false});
 
   return returnVal
 }
 
-export const fetchAllMessagesByContactFromDB = async (contactID) => {
-    let returnVal = []
-  
+export const fetchAllMessagesByContactFromDB = async (contactID, setMessages) => {
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('jwt_token')}` },
@@ -77,13 +91,11 @@ export const fetchAllMessagesByContactFromDB = async (contactID) => {
   
     await fetch(constants(contactID, null, null).API_URL_GET_ALL_MESSAGES_BY_CONTACT, requestOptions)
           .then(response => response.json())
-          .then(responseJson => {returnVal = responseJson})
-          .catch((error) => {returnVal = []});
-  
-    return returnVal
+          .then(responseJson => {setMessages(responseJson)})
+          .catch((error) => {setMessages([])});
   }
 
-export const establishMessagesListener = async (username, contactID, setMessages) => {
+export const establishMessagesListener = async (username, contactID, setMessages, dispatch) => {
     try{
       const connection = new HubConnectionBuilder()
           .withUrl(constants().API_URL_CHAT_CONNECTION)
@@ -95,7 +107,7 @@ export const establishMessagesListener = async (username, contactID, setMessages
 
       await connection.start();
       await connection.invoke("ConnectClientToChat", { username: username, contactID: contactID});
-      return connection
+      dispatch({type: actionTypes.SET_CHAT_CONNECTION, chatConnection: connection})
     }
     catch(e) {console.log(e)}
 }

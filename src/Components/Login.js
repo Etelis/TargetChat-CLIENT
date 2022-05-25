@@ -53,21 +53,13 @@ function Login() {
     // if no errors, and submit button was clicked check if user exists in DB and change current User to this user.
     if(Object.keys(formErrors).length === 0 && isSubmit) {
       async function fetchData(){
-        const foundUser = await fetchUserFromDB(formValues.userName, formValues.password)
-        if(foundUser){
-          dispatch({type: actionTypes.SET_USER, otherUser: foundUser})
-        }
-        // if no user was found print error.
-        else {
-          setFormErrors({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" });
-        }
+        await fetchUserFromDB(formValues.userName, formValues.password, dispatch, setFormErrors)
       }
       fetchData();
   }
   }, [formErrors]);
 
   return (
-      
     <div className='login'>
         <Fade in={true} appear={true} >
         <div className='login__container'>

@@ -24,8 +24,7 @@ function Sidebar() {
 
 
   const setConnectionContacts = async () => {
-    const connection = await contactsConnection(state.username, rooms, setRooms)
-    dispatch({type: actionTypes.SET_CONTACT_CONNECTION, contactsConnection: connection})
+    await contactsConnection(state.username, rooms, setRooms, dispatch)
   }
 
   // handles search bar.
@@ -35,7 +34,7 @@ function Sidebar() {
 	}
 
   const logoutHandle = (e) => {
-    logout()
+    logout(dispatch)
     dispatch({type: actionTypes.SET_USER, otherUser: nullUser})
   }
 
@@ -52,8 +51,7 @@ useEffect(() =>
 	 if(!searchInput)
    {
     async function fetchData(){
-      const contacts = await fetchAllContactFromDB();
-      setRooms(contacts);
+      await fetchAllContactFromDB(setRooms);
     }
     fetchData();
    }
@@ -62,8 +60,7 @@ useEffect(() =>
   // this useEffect will be triggered evertime there is a change in the state object.
   useEffect(() => {
     async function fetchData(){
-      const contacts = await fetchAllContactFromDB();
-      setRooms(contacts);
+      fetchAllContactFromDB(setRooms);
     }
     fetchData();
   }, [addChat]);

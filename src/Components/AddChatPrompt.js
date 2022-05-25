@@ -9,6 +9,7 @@ function AddChatPrompt(props) {
   // state for the input
   const [input, setInput] = useState({contactID: "", contactName: "", server: ""});
   const [state, dispatch] = useStateValue();
+  const [errorField, setErrorField] = useState("Add your friend on TargetChat")
   // handles the closing of the addChat popup
   const handleClose = () =>  props.showAddChat(false);
 
@@ -17,7 +18,7 @@ function AddChatPrompt(props) {
     e.preventDefault();
     if(input.contactID !== "" && input.server !== "") {
       async function fetchData(){
-        if(await createNewContactDB(state.username, input.contactID, input.contactName, input.server))
+        if(await createNewContactDB(state.username, input.contactID, input.contactName, input.server, setErrorField))
           props.showAddChat(false);
       }
       fetchData()
@@ -75,7 +76,7 @@ function AddChatPrompt(props) {
                 </Form.Group>
                 <Form.Group>
                     <Form.Text className="text-muted" id='form-text'>
-                        Add your friend on TargetChat
+                        {errorField}
                     </Form.Text>
                 </Form.Group>
               

@@ -49,8 +49,7 @@ function Chat() {
 
   const setConnectionWithRoom = async (username, contactID) => {
     await closeConnection(state.chatConnection);
-    const connection = await establishMessagesListener(username,  contactID, setMessages)
-    dispatch({type: actionTypes.SET_CHAT_CONNECTION, chatConnection: connection})
+    await establishMessagesListener(username,  contactID, setMessages, dispatch)
   }
   
   // adjusts the chat (messages, name, profile pic) 
@@ -58,8 +57,8 @@ function Chat() {
     if (roomId) {
       console.log(state.chatConnection)
       async function fetchData(){
-        setContact(await fetchContactByIDFromDB(roomId));
-        setMessages(await fetchAllMessagesByContactFromDB(roomId));
+        await fetchContactByIDFromDB(roomId, setContact);
+        await fetchAllMessagesByContactFromDB(roomId, setMessages);
         // setRoomName(contact.name);
         setRoomPic(emptyUser)
         await setConnectionWithRoom(state.username, roomId);
@@ -77,10 +76,9 @@ function Chat() {
   // submits the message and adds it to the chat's messages
   useEffect(() => {
     if (isSubmited && input != "") {
-      console.log("entered submited")
       async function fetchData(){
       if (await createNewMessageDB(state.username, contact.id, input, contact.server)){
-        setMessages(await fetchAllMessagesByContactFromDB(roomId));
+        await fetchAllMessagesByContactFromDB(roomId, setMessages);
         dispatch({type: actionTypes.RENDER});
       }
       setInput(""); 

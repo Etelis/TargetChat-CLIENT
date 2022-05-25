@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { currentUserSetter } from './Controllers/UsersDBController';
-import { currentUser } from './model/UserDB';
+import { nullUser } from './Utils/Constants';
 import { StateProvider } from './Components/StateProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider initialState={currentUser} reducer={currentUserSetter}>
+    <StateProvider initialState={nullUser} reducer={currentUserSetter}>
     <App />
     </StateProvider>
   </React.StrictMode>,

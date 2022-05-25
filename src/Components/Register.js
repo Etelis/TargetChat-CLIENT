@@ -75,21 +75,11 @@ function Register() {
                 displayName: formValues.displayname,
                 photo: formValues.photo,
             }
-            
-            if (await createUserDB(newUser))
-            {
-                dispatch(
-                    {
-                    type: actionTypes.SET_USER,
-                    otherUser: newUser
-                    })
-            }
-            else{
-                setFormErrors({userName: " - User already exists!" });
-            }
+            await createUserDB(newUser, dispatch, setFormErrors)
         }
         fetchData()
     }
+
     }, [formErrors]);
   
   return (

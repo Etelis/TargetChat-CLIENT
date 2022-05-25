@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from './Components/Sidebar';
 import Chat from './Components/Chat';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -9,29 +9,19 @@ import { useStateValue } from './Components/StateProvider';
 import { Fade } from 'react-bootstrap';
 import { AuthenticateByToken } from './Controllers/UsersDBController';
 import { actionTypes } from './Utils/Constants';
-import LoadAnimation from './Components/MediaComponents/Loading'
 
 
 
 function App() {
+  // Global User Object
   const [{ username }, dispatch] = useStateValue();
-  const [loading, setLoading] = useState(true)
 
   useEffect( () => {
-    
     async function fetchData(){
-      const user = await AuthenticateByToken()
-      if (user == null)
-        return
-      dispatch({type: actionTypes.SET_USER, otherUser: user})
+      await AuthenticateByToken(dispatch)
     }
     fetchData()
-    setLoading(false)
-
   },[])
-
-  if (loading)
-    return(<LoadAnimation/>);
 
   return (
     <Router>

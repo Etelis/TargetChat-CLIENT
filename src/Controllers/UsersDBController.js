@@ -1,14 +1,29 @@
 import constants, { actionTypes } from '../Utils/Constants';
 
+const isAvailable = (server) => {
+  const timeout = new Promise((resolve, reject) => {
+      setTimeout(reject, 300, 'Request timed out');
+  });
 
+  const request = fetch(server);
 
-export const logout = () => {
-  localStorage.removeItem('jwt_token');
+  return Promise
+      .race([timeout, request])
+      .then(function() {
+        return true;
+      })
+      .catch(function() {
+        return false;
+      });
 }
 
-export const AuthenticateByToken = async () =>{
-  let returnVal = null
+export const logout = (dispatch) => {
+  localStorage.removeItem('jwt_token');
+  dispatch({type: actionTypes.SET_USER, otherUser: null})
+}
 
+// Authenticate on first entry by local storage token.
+export const AuthenticateByToken = async (dispatch) =>{
   const requestOptions =
   {
     method: 'GET',
@@ -16,19 +31,15 @@ export const AuthenticateByToken = async () =>{
     credentials: 'include',
   };
 
-  await fetch(constants().API_URL_AUTHENTICATE_USER, requestOptions)
+  return await fetch(constants().API_URL_AUTHENTICATE_USER, requestOptions)
         .then(response => response.json())
-        .then(jsonResponse => returnVal = jsonResponse)
-        .catch(error => returnVal = null)
-
-  console.log(returnVal)
-
-  return returnVal
+        .then(jsonResponse =>  dispatch({type: actionTypes.SET_USER, otherUser: jsonResponse}))
 }
-export const fetchUserFromDB = async (userName, password) =>
-{
-  let returnVal = null
 
+
+// Fetch user from DB, by using API request.
+export const fetchUserFromDB = async (userName, password, dispatch, setErrorField) =>
+{
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -38,33 +49,36 @@ export const fetchUserFromDB = async (userName, password) =>
       "Password": password
       })};
 
-    await fetch(constants().API_URL_LOGIN_USER, requestOptions)
-    .then(response => response.json())
-    .then(jsonResponse => {
-      returnVal = jsonResponse.user
-      localStorage.setItem('jwt_token', jsonResponse.token);
+    return await fetch(constants().API_URL_LOGIN_USER, requestOptions)
+    .then(response => {
+      if (response.ok)
+        return response.json()
+      setErrorField({userName: " - invalid Username or Password!", password: " - invalid Username or Password!" })
+      return {token:"", user:null}
     })
-    .catch((error) => {returnVal = null;})
-    console.log(returnVal)
-  return returnVal
-};
+    .then(jsonResponse => {
+      localStorage.setItem('jwt_token', jsonResponse.token);
+      dispatch({type: actionTypes.SET_USER, otherUser: jsonResponse.user})
+    })
+    .catch((error) => {
+        setErrorField({userName: " - Server is unreachable"})
+    })
+  }
 
-export const createUserDB = async (user) => {
-  let returnVal = null;
-  
+export const createUserDB = async (user, dispatch, setFormErrors) => {
+
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(user)};
 
-  await fetch(constants().API_URL_REGISTER_USER, requestOptions)
+  return await fetch(constants().API_URL_REGISTER_USER, requestOptions)
         .then(response => {
           if (response.ok)
-            returnVal = true
+            dispatch({type: actionTypes.SET_USER, otherUser: user})
+          setFormErrors({userName: " - User already exists!" });
         })
-        .catch(error => returnVal = false);
-  console.log(returnVal)
-  return returnVal
+        .catch(error => setFormErrors({userName: " - Server is unreachable"}))
 }
 
 
