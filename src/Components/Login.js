@@ -54,7 +54,6 @@ function Login() {
     if(Object.keys(formErrors).length === 0 && isSubmit) {
       async function fetchData(){
         const foundUser = await fetchUserFromDB(formValues.userName, formValues.password)
-        console.log(foundUser)
         if(foundUser){
           dispatch({type: actionTypes.SET_USER, otherUser: foundUser})
         }

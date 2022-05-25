@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { createNewContactDB } from '../Controllers/ContactsDBController';
 import { useStateValue } from './StateProvider';
-import DefaultProfilePic from '../images/defaultIcon.svg';
 import './AddChatPrompt.css'
 
 // modal for showing new chat add.

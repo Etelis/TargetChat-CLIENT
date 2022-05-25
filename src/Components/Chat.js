@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import './Chat.css';
 import imageAttachment from "../images/photoAttachment.svg";
 import { fetchContactByIDFromDB } from '../Controllers/ContactsDBController';
-import { createNewMessageDB, fetchAllMessagesByContactFromDB } from '../Controllers/MessagesDBController';
+import { closeConnection, createNewMessageDB, establishMessagesListener, fetchAllMessagesByContactFromDB } from '../Controllers/MessagesDBController';
 import { useParams } from "react-router-dom";
 import { useStateValue } from './StateProvider';
 import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
@@ -47,33 +47,22 @@ function Chat() {
   const [contact, setContact] = useState("");
 
 
-  const joinRoom = async (username, contactID) => {
-    try{
-      const connection = new HubConnectionBuilder()
-          .withUrl("https://localhost:7180/chat_connect")
-          .build();
-
-      connection.on("ReceiveMessage", (message) => {
-            console.log(message);
-            setMessages(messages => [...messages, message]);
-          });
-
-      console.log(contactID);
-      await connection.start();
-      await connection.invoke("ConnectClientToChat", { username: username, contactID: contactID});
-    }
-
-    catch{}
+  const setConnectionWithRoom = async (username, contactID) => {
+    await closeConnection(state.chatConnection);
+    const connection = await establishMessagesListener(username,  contactID, setMessages)
+    dispatch({type: actionTypes.SET_CHAT_CONNECTION, chatConnection: connection})
   }
+  
   // adjusts the chat (messages, name, profile pic) 
   useEffect(() => {
     if (roomId) {
+      console.log(state.chatConnection)
       async function fetchData(){
         setContact(await fetchContactByIDFromDB(roomId));
         setMessages(await fetchAllMessagesByContactFromDB(roomId));
         // setRoomName(contact.name);
         setRoomPic(emptyUser)
-        await joinRoom(state.username, roomId);
+        await setConnectionWithRoom(state.username, roomId);
     }
     fetchData();
   }

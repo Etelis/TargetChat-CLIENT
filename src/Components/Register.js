@@ -5,6 +5,7 @@ import { useStateValue } from './StateProvider';
 import { createUserDB } from '../Controllers/UsersDBController';
 import { actionTypes } from '../Utils/Constants';
 import { Link } from "react-router-dom";
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 function Register() {
   const [state, dispatch] = useStateValue();
@@ -80,7 +81,7 @@ function Register() {
                 dispatch(
                     {
                     type: actionTypes.SET_USER,
-                    user: newUser
+                    otherUser: newUser
                     })
             }
             else{

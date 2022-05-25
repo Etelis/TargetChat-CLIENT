@@ -5,13 +5,13 @@ import { useStateValue } from './StateProvider';
 import AddChatPrompt from './AddChatPrompt';
 import Avatar from './MediaComponents/Avatar';
 import { Button } from 'react-bootstrap';
-import { fetchAllContactFromDB } from '../Controllers/ContactsDBController';
-import { actionTypes } from '../Utils/Constants';
-import { currentUser } from '../model/UserDB';
-import defaultPhoto from "../images/emptyUser.png";
+import { fetchAllContactFromDB, fetchContactByIDFromDB } from '../Controllers/ContactsDBController';
+import { actionTypes, nullUser } from '../Utils/Constants';
 import { logout } from '../Controllers/UsersDBController';
+import {contactsConnection} from '../Controllers/ContactsDBController'
 
 function Sidebar() {
+  
 
   // useState for all chats of current user.
   const [rooms, setRooms] = useState([]);
@@ -22,6 +22,12 @@ function Sidebar() {
   // useState for showing add new chat modal.
 	const [addChat, showAddChat] = useState(false);
 
+
+  const setConnectionContacts = async () => {
+    const connection = await contactsConnection(state.username, rooms, setRooms)
+    dispatch({type: actionTypes.SET_CONTACT_CONNECTION, contactsConnection: connection})
+  }
+
   // handles search bar.
 	const searchHandle = (e) => {
 		setSearchInput(e.target.value);
@@ -30,8 +36,16 @@ function Sidebar() {
 
   const logoutHandle = (e) => {
     logout()
-    dispatch({type: actionTypes.SET_USER, otherUser: currentUser})
+    dispatch({type: actionTypes.SET_USER, otherUser: nullUser})
   }
+
+useEffect(() =>
+{
+  async function fetchData() {
+    await setConnectionContacts()
+  }
+  fetchData();
+}, [])
   
 // This useEffect will be triggered once at the beginning only.
  useEffect(() =>  {
@@ -58,7 +72,7 @@ function Sidebar() {
   <div className="sidebar">
     {addChat && <AddChatPrompt showAddChat={showAddChat} />}
       <div className="sidebar__header">
-        <Avatar src={state.photo} />
+        <Avatar src={state.photo ? state.photo : null} />
         <div className="sidebar__headerRight">
           <Button size='sm' onClick={(e) => {showAddChat(true);}} variant="outline-light"> 
 						<i class="bi bi-person-plus-fill" size="1em" />
@@ -82,7 +96,7 @@ function Sidebar() {
       <div className="sidebar__chats">
         <div className="sidebar__chatsContainer">
 					{rooms.map(room => (
-          <SidebarChat profilePic={room.photo ? (room.photo) : (defaultPhoto)} id={room.id} name={room.name} lastMessage={room.last ? ({content: room.last, timestamp: room.lastdate}) : ({content: "", timestamp: ""})} />
+          <SidebarChat profilePic={room.photo} id={room.id} name={room.name} lastMessage={room.last ? ({content: room.last, timestamp: room.lastdate}) : ({content: "", timestamp: ""})} />
         ))}
         </div>
       </div>
