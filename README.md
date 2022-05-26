@@ -140,6 +140,16 @@ Main Chat:
   ## Chat Recipient:
   adding a new chat receipinct is done by a modal component allowing a user to add new receipient for incomming and out going conversations.
   ![image](https://user-images.githubusercontent.com/92247226/165356113-467b2a86-8ee9-4332-8ec7-fd42356245b1.png)
+  
+  ## SignalR:
+  when a client is connected to the chat application and being added by a diffrent client (session) the new contact will be pushed instantly to the connected chat.
+  ![2022-05-26-19-47-49](https://user-images.githubusercontent.com/92247226/170538750-2a8849d3-d63f-4353-8105-8c9e4a1fda57.gif)
+
+  when a client is connect to a chat with a diffrent client (seesion) and a new message is sent, the message will appear instantly to the connected chat members.
+![2022-05-26-19-56-36](https://user-images.githubusercontent.com/92247226/170538924-d01b4e15-8d91-4994-bb3b-38db1de618c4.gif)
+
+  
+
 
 
 ---
