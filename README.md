@@ -27,7 +27,7 @@ Target Chat is an open-source team collaboration Real-Time Ready Chat App writte
 
 # Replit - Preview:
 You could check a full working application deployed to replit.
-* [Target Chat](https://targetchatreactv2.etelis.repl.co/login) on replit.
+* [Target Chat](https://targetchat-client.etelis.repl.co/) on replit.
 * Default username: Maayan
 * Default password: Maayan12345
 ---
